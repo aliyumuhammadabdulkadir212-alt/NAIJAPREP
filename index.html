@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-NG">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Naija Scholar — Learn. Pass. Succeed. Free exam prep and study tools for every Nigerian student." />
+  <meta name="theme-color" content="#1f6b4a" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Naija Scholar" />
+  <meta property="og:description" content="Free offline exam prep for JAMB, WAEC, NECO, Post-UTME and university courses." />
+  <meta property="og:type" content="website" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <title>Naija Scholar — Learn. Pass. Succeed.</title>
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== SKIP LINK (accessibility) ===== -->
+  <a href="#app" class="skip-link">Skip to content</a>
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar" role="banner">
+    <button class="btn btn-back home-btn" onclick="showHome()" aria-label="Go to home screen">
+      🎓 Naija Scholar
+    </button>
+    <div class="top-bar-actions">
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle colour theme" title="Toggle theme">🌗</button>
+      <button class="btn btn-icon" onclick="showSettings()" aria-label="Settings" title="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- ===== PWA INSTALL BANNER (shown by JS when prompt fires) ===== -->
+  <div id="install-banner" class="install-banner" hidden>
+    <span>Install Naija Scholar on your phone for offline use</span>
+    <button class="btn btn-primary btn-sm" onclick="installApp()">Install</button>
+    <button class="btn btn-icon" onclick="dismissInstall()" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- ===== MAIN APP AREA ===== -->
+  <main id="app" role="main" tabindex="-1">
+    <!-- Views are rendered here by app.js -->
+    <div class="loading-screen">
+      <p>Loading Naija Scholar…</p>
+    </div>
+  </main>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- ===== MODAL (shared overlay) ===== -->
+  <div id="modal-overlay" class="modal-overlay" hidden onclick="closeModal()">
+    <div class="modal" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP SCRIPT ===== -->
+  <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mth_001",
+    "topic": "Number and Numeration",
+    "q": "Evaluate: log₂(64) + log₅(125)",
+    "options": [
+      "6",
+      "9",
+      "12",
+      "15"
+    ],
+    "answer": 1,
+    "explanation": "log₂(64) = log₂(2⁶) = 6. log₅(125) = log₅(5³) = 3. Therefore, 6 + 3 = 9.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_002",
+    "topic": "Number and Numeration",
+    "q": "Convert 0.3̄ (0.3 recurring) to a fraction in its simplest form.",
+    "options": [
+      "3/10",
+      "1/3",
+      "33/100",
+      "3/100"
+    ],
+    "answer": 1,
+    "explanation": "Let x = 0.333... Then 10x = 3.333..., so 10x − x = 3, giving 9x = 3, and x = 1/3.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_003",
+    "topic": "Number and Numeration",
+    "q": "A trader bought an article for ₦4,500 and sold it for ₦5,400. What is the percentage profit?",
+    "options": [
+      "15%",
+      "18%",
+      "20%",
+      "25%"
+    ],
+    "answer": 2,
+    "explanation": "Profit = 5400 − 4500 = ₦900. Percentage profit = (900 / 4500) × 100 = 20%.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_004",
+    "topic": "Algebra",
+    "q": "Solve for x: 3x² − 11x + 6 = 0",
+    "options": [
+      "x = 3 or x = 2/3",
+      "x = −3 or x = 2/3",
+      "x = 3 or x = −2/3",
+      "x = 1/3 or x = 6"
+    ],
+    "answer": 0,
+    "explanation": "Factorising: 3x² − 11x + 6 = (3x − 2)(x − 3) = 0. So x = 2/3 or x = 3.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_005",
+    "topic": "Algebra",
+    "q": "If f(x) = 2x² − 3x + 1, find f(−2).",
+    "options": [
+      "3",
+      "11",
+      "15",
+      "−3"
+    ],
+    "answer": 2,
+    "explanation": "f(−2) = 2(−2)² − 3(−2) + 1 = 2(4) + 6 + 1 = 8 + 6 + 1 = 15.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_006",
+    "topic": "Algebra",
+    "q": "Simplify: (2a³b²)³ ÷ (4a²b)",
+    "options": [
+      "2a⁷b⁵",
+      "2a⁵b⁶",
+      "2a⁷b⁵",
+      "4a⁵b⁵"
+    ],
+    "answer": 0,
+    "explanation": "(2a³b²)³ = 8a⁹b⁶. Dividing by 4a²b: 8a⁹b⁶ / 4a²b = 2a⁷b⁵.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_007",
+    "topic": "Geometry and Trigonometry",
+    "q": "Find the value of sin(60°) × cos(30°).",
+    "options": [
+      "1/2",
+      "√3/4",
+      "3/4",
+      "√3/2"
+    ],
+    "answer": 2,
+    "explanation": "sin(60°) = √3/2 and cos(30°) = √3/2. Product = (√3/2) × (√3/2) = 3/4.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_008",
+    "topic": "Geometry and Trigonometry",
+    "q": "Calculate the area of a triangle with sides 5 cm, 12 cm, and a right angle between them.",
+    "options": [
+      "17 cm²",
+      "30 cm²",
+      "60 cm²",
+      "25 cm²"
+    ],
+    "answer": 1,
+    "explanation": "Area of a right triangle = (1/2) × base × height = (1/2) × 5 × 12 = 30 cm².",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_009",
+    "topic": "Calculus",
+    "q": "Find the derivative of y = 4x³ − 6x² + 2x − 9.",
+    "options": [
+      "12x² − 12x + 2",
+      "4x² − 6x + 2",
+      "12x − 12",
+      "4x³ − 6x"
+    ],
+    "answer": 0,
+    "explanation": "Using the power rule: dy/dx = 3(4x²) − 2(6x) + 2 = 12x² − 12x + 2.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_010",
+    "topic": "Calculus",
+    "q": "Evaluate ∫(6x² + 4x − 3) dx.",
+    "options": [
+      "12x + 4 + C",
+      "2x³ + 2x² − 3x + C",
+      "6x³ + 4x² + C",
+      "3x² + 2x + C"
+    ],
+    "answer": 1,
+    "explanation": "Integrating term by term: ∫6x² dx = 2x³, ∫4x dx = 2x², ∫−3 dx = −3x. Result: 2x³ + 2x² − 3x + C.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_011",
+    "topic": "Statistics and Probability",
+    "q": "The scores of five students in a test are: 12, 18, 15, 20, and 10. Find the mean score.",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "18"
+    ],
+    "answer": 1,
+    "explanation": "Mean = (12 + 18 + 15 + 20 + 10) / 5 = 75 / 5 = 15.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_012",
+    "topic": "Statistics and Probability",
+    "q": "A bag contains 4 red balls, 3 blue balls, and 5 green balls. If one ball is drawn at random, what is the probability it is NOT red?",
+    "options": [
+      "1/3",
+      "4/12",
+      "2/3",
+      "5/12"
+    ],
+    "answer": 2,
+    "explanation": "Total balls = 4 + 3 + 5 = 12. Non-red balls = 3 + 5 = 8. P(not red) = 8/12 = 2/3.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_013",
+    "topic": "Mensuration",
+    "q": "Find the total surface area of a cylinder with radius 7 cm and height 10 cm. (Take π = 22/7)",
+    "options": [
+      "594 cm²",
+      "748 cm²",
+      "616 cm²",
+      "440 cm²"
+    ],
+    "answer": 1,
+    "explanation": "TSA = 2πr(r + h) = 2 × (22/7) × 7 × (7 + 10) = 2 × 22 × 17 = 748 cm².",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_014",
+    "topic": "Mensuration",
+    "q": "The volume of a sphere is 288π cm³. Find its radius.",
+    "options": [
+      "4 cm",
+      "6 cm",
+      "8 cm",
+      "12 cm"
+    ],
+    "answer": 1,
+    "explanation": "Volume of sphere = (4/3)πr³. So (4/3)πr³ = 288π → r³ = 288 × 3/4 = 216 → r = 6 cm.",
+    "year": null,
+    "source": "original"
+  },
+  {
+    "id": "mth_015",
+    "topic": "Mensuration",
+    "q": "A rectangular field has a length of 45 m and a width of 30 m. Find the length of its diagonal.",
+    "options": [
+      "50 m",
+      "54 m",
+      "55 m",
+      "75 m"
+    ],
+    "answer": 1,
+    "explanation": "Using Pythagoras: diagonal = √(45² + 30²) = √(2025 + 900) = √2925 = √(225 × 13) = 15√13 ≈ 54.1 m. The closest answer is 54 m.",
+    "year": null,
+    "source": "original"
+  }
+]
