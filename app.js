@@ -291,18 +291,18 @@ function updateSearch(query) {
 async function explainWithAi(buttonElement) {
   const output = document.querySelector('.ai-answer');
   if (!output) return;
-  output.textContent = 'Connecting to Ollama…';
+  output.textContent = 'Connecting to Ollama (Gemma 3)…';
   try {
     const response = await fetch('http://localhost:11434/api/generate', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `Explain this practice question for a student in simple terms. Question: ${buttonElement.dataset.question}\nCorrect explanation: ${buttonElement.dataset.explanation}` }),
-      signal: AbortSignal.timeout(10000)
+      body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `You are Naija Scholar AI Tutor powered by Gemma 3. Explain this practice question for a Nigerian student in simple terms so even a beginner can understand and remember. Break it down step by step. Question: ${buttonElement.dataset.question}\nCorrect explanation: ${buttonElement.dataset.explanation}` }),
+      signal: AbortSignal.timeout(60000)
     });
     if (!response.ok) throw new Error('Ollama unavailable');
     const result = await response.json();
     output.textContent = result.response || 'The local model returned no explanation.';
   } catch {
-    output.textContent = 'Local AI is unavailable. Install Ollama, run gemma3, and allow localhost access to try again.';
+    output.textContent = 'Local AI is unavailable. Install Ollama, run: ollama pull gemma3, then ollama run gemma3. Enable "Explain with local AI" and try again.';
   }
 }
 document.addEventListener('click', async event => {
@@ -388,8 +388,8 @@ document.addEventListener('submit', event => {
         try {
           const response = await fetch('http://localhost:11434/api/generate', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `You are Naija Scholar AI Tutor. Solve this student's problem step by step in simple, easy-to-understand Nigerian-friendly language. Break it down so even a beginner can understand. Give clear steps, final answer, and tips to remember. Question: ${question}` }),
-            signal: AbortSignal.timeout(30000)
+            body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `You are Naija Scholar AI Tutor powered by Gemma 3. Solve this student's problem step by step in simple, easy-to-understand Nigerian-friendly language. Break it down so even a lazy/beginner student can understand and score better. Give: 1) Problem statement recap, 2) Step-by-step solution with explanations, 3) Final answer clearly, 4) Quick tips to remember. Be concise but thorough. Question: ${question}` }),
+            signal: AbortSignal.timeout(60000)
           });
           if (response.ok) {
             const result = await response.json();
