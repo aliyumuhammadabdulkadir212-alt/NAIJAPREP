@@ -1,6 +1,6 @@
-# Gombe Past Questions
+# Naija Scholar
 
-An open-source, phone-friendly practice app for JAMB candidates and university students in Gombe State, Nigeria. It is a static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
+An open-source, phone-friendly practice app for JAMB candidates and Nigerian university students. It is a static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
 
 ## Why this app
 
