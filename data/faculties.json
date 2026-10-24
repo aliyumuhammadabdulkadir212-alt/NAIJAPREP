@@ -1,61 +1,12 @@
 {
-  "Science": [
-    "Biochemistry",
-    "Biology",
-    "Chemistry",
-    "Computer Science",
-    "Mathematics",
-    "Microbiology",
-    "Physics",
-    "Statistics"
-  ],
-  "Engineering": [
-    "Civil Engineering",
-    "Computer Engineering",
-    "Electrical Engineering",
-    "Mechanical Engineering",
-    "Chemical Engineering"
-  ],
-  "Social and Management Sciences": [
-    "Accounting",
-    "Business Administration",
-    "Economics",
-    "Mass Communication",
-    "Political Science",
-    "Sociology",
-    "Public Administration"
-  ],
-  "Arts and Humanities": [
-    "English",
-    "History",
-    "Islamic Studies",
-    "Christian Religious Studies",
-    "Arabic",
-    "Linguistics",
-    "Theatre Arts"
-  ],
-  "Law": [
-    "Law"
-  ],
-  "Education": [
-    "Education (Mathematics)",
-    "Education (English)",
-    "Education (Biology)",
-    "Education (Computer Science)",
-    "Education (Chemistry)"
-  ],
-  "Agriculture": [
-    "Agriculture",
-    "Agricultural Economics",
-    "Food Science and Technology",
-    "Forestry"
-  ],
-  "Health Sciences": [
-    "Medicine and Surgery",
-    "Nursing",
-    "Medical Laboratory Science",
-    "Pharmacy",
-    "Physiotherapy",
-    "Dentistry"
+  "faculties": [
+    {"name":"Science","courses":["Biochemistry","Biology","Chemistry","Computer Science","Mathematics","Microbiology","Physics","Statistics"]},
+    {"name":"Engineering","courses":["Civil Engineering","Computer Engineering","Electrical Engineering","Mechanical Engineering"]},
+    {"name":"Social and Management Sciences","courses":["Accounting","Business Administration","Economics","Mass Communication","Political Science","Sociology"]},
+    {"name":"Arts and Humanities","courses":["English","History","Islamic Studies","Christian Religious Studies","Arabic","Linguistics"]},
+    {"name":"Law","courses":["Law"]},
+    {"name":"Education","courses":["Education (Mathematics)","Education (English)","Education (Biology)"]},
+    {"name":"Agriculture","courses":["Agriculture","Agricultural Economics"]},
+    {"name":"Health Sciences","courses":["Medicine and Surgery","Nursing","Medical Laboratory Science","Pharmacy"]}
   ]
 }

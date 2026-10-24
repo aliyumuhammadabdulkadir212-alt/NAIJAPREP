@@ -1,0 +1,10 @@
+{
+  "name": "Gombe Past Questions",
+  "short_name": "Gombe Practice",
+  "description": "Original study practice for JAMB candidates and university students in Gombe State.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f4ee",
+  "theme_color": "#1f6947",
+  "icons": []
+}

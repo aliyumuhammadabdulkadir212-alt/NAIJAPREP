@@ -1,0 +1,7 @@
+[
+{"id":"csc201-01","topic":"Programming fundamentals","q":"Which loop structure checks its condition after executing the body at least once?","options":["for","while","do-while","if"],"answer":2,"explanation":"A do-while loop tests its condition after the loop body."},
+{"id":"csc201-02","topic":"Programming fundamentals","q":"In many programming languages, an array index is used to ___.","options":["select an element by position","compile the whole program","create a network","format a disk"],"answer":0,"explanation":"An index identifies an element's position in an array."},
+{"id":"csc201-03","topic":"Programming fundamentals","q":"A named value that can change during program execution is a ___.","options":["variable","constant","comment","keyword list"],"answer":0,"explanation":"A variable stores a value that may be updated while the program runs."},
+{"id":"csc201-04","topic":"Algorithms","q":"A finite, ordered set of steps for solving a problem is an ___.","options":["algorithm","operating system","interface cable","database row"],"answer":0,"explanation":"An algorithm is a well-defined sequence of steps that solves a problem."},
+{"id":"csc201-05","topic":"Algorithms","q":"In a flowchart, a diamond commonly represents a ___.","options":["decision","start or end","input only","printed page"],"answer":0,"explanation":"A diamond denotes a decision or condition with alternative paths."}
+]

@@ -1,0 +1,12 @@
+[
+{"id":"lit-01","topic":"Drama","q":"A speech delivered by a character alone on stage to reveal inner thoughts is a ___.","options":["soliloquy","aside","chorus","prologue"],"answer":0,"explanation":"A soliloquy lets the audience hear a character's private thoughts."},
+{"id":"lit-02","topic":"Drama","q":"Instructions in a play that guide movement or setting are called ___.","options":["stage directions","stanzas","footnotes","refrains"],"answer":0,"explanation":"Stage directions provide performance details beyond spoken dialogue."},
+{"id":"lit-03","topic":"Prose","q":"The central character around whom a story is organised is the ___.","options":["antagonist","protagonist","narrator","chorus"],"answer":1,"explanation":"The protagonist is the principal character in a narrative."},
+{"id":"lit-04","topic":"Prose","q":"The sequence of events in a narrative is its ___.","options":["plot","setting","tone","diction"],"answer":0,"explanation":"Plot is the arrangement of events in a story."},
+{"id":"lit-05","topic":"Poetry","q":"A group of lines forming a unit in a poem is a ___.","options":["stanza","scene","chapter","paragraph"],"answer":0,"explanation":"A stanza is a grouped set of lines in a poem."},
+{"id":"lit-06","topic":"Poetry","q":"The repetition of initial consonant sounds in nearby words is ___.","options":["alliteration","assonance","hyperbole","euphemism"],"answer":0,"explanation":"Alliteration repeats initial consonant sounds, as in 'bright blue boat'."},
+{"id":"lit-07","topic":"Literary appreciation","q":"A comparison that uses 'like' or 'as' is a ___.","options":["simile","metaphor","paradox","pun"],"answer":0,"explanation":"A simile explicitly compares two things using 'like' or 'as'."},
+{"id":"lit-08","topic":"Literary appreciation","q":"The writer's attitude towards a subject, conveyed through language, is the ___.","options":["tone","plot","setting","rhyme"],"answer":0,"explanation":"Tone is the writer's or speaker's attitude expressed in the work."},
+{"id":"lit-09","topic":"Drama","q":"A serious play in which a protagonist's downfall is central is generally a ___.","options":["tragedy","comedy","farce","pastoral"],"answer":0,"explanation":"Tragedy traditionally centres on serious conflict and a protagonist's downfall."},
+{"id":"lit-10","topic":"Prose","q":"The person or voice that tells a story is the ___.","options":["narrator","editor","audience","protagonist"],"answer":0,"explanation":"The narrator is the voice that presents the story to the reader."}
+]

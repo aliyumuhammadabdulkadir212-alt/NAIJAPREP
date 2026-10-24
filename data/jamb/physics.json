@@ -1,0 +1,12 @@
+[
+{"id":"phys-01","topic":"Mechanics","q":"The SI unit of force is the ___.","options":["Joule","Newton","Watt","Pascal"],"answer":1,"explanation":"Force is measured in newtons (N)."},
+{"id":"phys-02","topic":"Mechanics","q":"A car travels 120 m in 10 s. What is its average speed?","options":["10 m/s","12 m/s","20 m/s","1200 m/s"],"answer":1,"explanation":"Average speed = distance / time = 120 / 10 = 12 m/s."},
+{"id":"phys-03","topic":"Heat","q":"Heat transfer through a vacuum occurs mainly by ___.","options":["conduction","convection","radiation","evaporation"],"answer":2,"explanation":"Radiation can travel through a vacuum as electromagnetic waves."},
+{"id":"phys-04","topic":"Heat","q":"The SI unit of specific heat capacity is ___.","options":["J kg⁻¹ K⁻¹","J kg K","W m⁻¹","N kg⁻¹"],"answer":0,"explanation":"Specific heat capacity is energy per unit mass per unit temperature change."},
+{"id":"phys-05","topic":"Waves and optics","q":"A wave has frequency 5 Hz and wavelength 2 m. Find its speed.","options":["2.5 m/s","7 m/s","10 m/s","20 m/s"],"answer":2,"explanation":"Wave speed = frequency × wavelength = 5 × 2 = 10 m/s."},
+{"id":"phys-06","topic":"Waves and optics","q":"The image formed by a plane mirror is ___.","options":["real and inverted","virtual and upright","real and enlarged","virtual and inverted"],"answer":1,"explanation":"A plane mirror forms a virtual, upright image of the same size."},
+{"id":"phys-07","topic":"Electricity","q":"Ohm's law is written as V = ___.","options":["I/R","IR","R/I","I + R"],"answer":1,"explanation":"Voltage equals current multiplied by resistance: V = IR."},
+{"id":"phys-08","topic":"Electricity","q":"A 6 Ω resistor carries a current of 2 A. What is the voltage across it?","options":["3 V","8 V","12 V","24 V"],"answer":2,"explanation":"V = IR = 2 × 6 = 12 V."},
+{"id":"phys-09","topic":"Magnetism","q":"Like magnetic poles ___.","options":["attract","repel","cancel all charge","always rotate"],"answer":1,"explanation":"Like poles repel while unlike poles attract."},
+{"id":"phys-10","topic":"Modern physics","q":"The emission of electrons from a metal surface when light shines on it is the ___.","options":["photoelectric effect","Doppler effect","Hall effect","Compton effect"],"answer":0,"explanation":"The photoelectric effect is the emission of electrons after light transfers energy to a surface."}
+]

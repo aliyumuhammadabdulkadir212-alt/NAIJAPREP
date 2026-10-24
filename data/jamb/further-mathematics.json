@@ -1,0 +1,12 @@
+[
+{"id":"fm-01","topic":"Matrices and determinants","q":"For A = [[1,2],[3,4]], the determinant of A is ___.","options":["-2","2","10","-10"],"answer":0,"explanation":"For a 2×2 matrix, det(A) = ad - bc = 1×4 - 2×3 = -2."},
+{"id":"fm-02","topic":"Matrices and determinants","q":"The identity matrix leaves a compatible matrix unchanged under ___.","options":["multiplication","addition","division","transposition"],"answer":0,"explanation":"Multiplying a matrix by the identity matrix gives the original matrix."},
+{"id":"fm-03","topic":"Vectors","q":"The magnitude of vector (3,4) is ___.","options":["5","7","12","25"],"answer":0,"explanation":"Magnitude = √(3² + 4²) = √25 = 5."},
+{"id":"fm-04","topic":"Vectors","q":"The dot product of perpendicular vectors is ___.","options":["0","1","their sum","undefined"],"answer":0,"explanation":"A·B = |A||B|cos θ; when θ = 90°, cos θ = 0."},
+{"id":"fm-05","topic":"Differentiation and integration","q":"Differentiate 3x³ with respect to x.","options":["9x²","3x²","x⁴","9x³"],"answer":0,"explanation":"Using the power rule, d(3x³)/dx = 9x²."},
+{"id":"fm-06","topic":"Differentiation and integration","q":"An antiderivative of 2x is ___.","options":["x² + C","2 + C","2x² + C","x + C"],"answer":0,"explanation":"The integral of 2x with respect to x is x² + a constant."},
+{"id":"fm-07","topic":"Probability distributions","q":"A random variable that can take only countable values is ___.","options":["discrete","continuous","imaginary","constant"],"answer":0,"explanation":"A discrete random variable has a finite or countably infinite set of possible values."},
+{"id":"fm-08","topic":"Probability distributions","q":"The probabilities of all possible outcomes in a probability distribution sum to ___.","options":["1","0","100","the mean"],"answer":0,"explanation":"The total probability across the complete outcome space equals 1."},
+{"id":"fm-09","topic":"Complex numbers","q":"The value of i², where i is the imaginary unit, is ___.","options":["-1","0","1","i"],"answer":0,"explanation":"The imaginary unit is defined by i² = -1."},
+{"id":"fm-10","topic":"Complex numbers","q":"The conjugate of 3 + 2i is ___.","options":["3 - 2i","-3 + 2i","-3 - 2i","2 + 3i"],"answer":0,"explanation":"The complex conjugate changes the sign of the imaginary part."}
+]

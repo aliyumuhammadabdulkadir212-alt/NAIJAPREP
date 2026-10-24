@@ -1,41 +1,63 @@
-# Naija Scholar
+# Gombe Past Questions
 
-Open-source past-question practice app for two users (JAMB candidates and university students) to help secondary-school students across Nigeria, prepare for JAMB.
+An open-source, phone-friendly practice app for JAMB candidates and university students in Gombe State, Nigeria. It is a static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
 
-## The problem
-Many students in Gombe State fail JAMB because of weak English and Maths basics, no access to past questions, no computer-based-test (CBT) practice, late preparation, and the cost of materials.
+## Why this app
 
-## What it does
-- Phone-friendly practice quiz with instant explanations
-- Shows which subjects a student should study next
-- Explains common reasons students fail, with practical fixes
-- Works offline once the page is saved (single `index.html`)
+Students can face barriers such as the cost or availability of study materials, limited access to CBT practice, gaps in foundational topics, and difficulty finding relevant course resources. These challenges differ from student to student; this app offers a free place to practise, review explanations, and identify topics to revisit. It does not claim to explain every student's JAMB result or guarantee an exam outcome.
 
-## Run it
-Open `index.html` in any browser. To host free: GitHub repo > Settings > Pages > deploy from `main`.
+## What it includes
 
-## Add past questions
-Add entries to the `JAMB` (by subject) or `UQ` (by course code) lists in `index.html`. Add courses to `FAC` and course units to `UNITS`. Format:
-`{q:"...",o:["A","B","C","D"],a:0,w:"..."}`
-Only add questions you have the right to share.
+- A starting choice for JAMB candidates and university students.
+- 15 JAMB subjects, syllabus topics, topic-tagged original practice questions, and explanations.
+- Subject and topic practice, plus a timed CBT-style mock with English and three selected subjects.
+- University faculty and course browsing, levels 100–500 (and 600 for Medicine), course-unit search, and General Studies units.
+- Score summaries by subject and topic, weak-topic suggestions, and locally saved progress.
+- Light and dark themes, responsive layouts, and a service worker that caches the app and its question data for offline use after the first visit.
+- An optional local Gemma explanation using Ollama. It is off by default and only connects to `localhost` when explicitly enabled.
 
-## Optional: AI tutor with Gemma (open model)
-Run Gemma locally with [Ollama](https://ollama.com) (`ollama run gemma3`) to explain wrong answers. Planned next step.
+All included questions are original practice questions, not real JAMB or university examination papers. The project is not affiliated with JAMB or any university. A year/source label appears only for question data that includes those fields.
 
-## Roadmap
-Teacher dashboard, Hausa explanations, more subjects, Arduino-based offline quiz device.
+## Run locally
+
+The Fetch API and service workers require an HTTP origin. From the project directory, run any static server, for example:
+
+```sh
+python -m http.server 8000
+```
+
+Then visit `http://localhost:8000`. You can also use the Live Server extension in VS Code. Opening `index.html` directly with `file://` will not load the JSON data.
+
+## Deploy to GitHub Pages
+
+1. Push the project to a GitHub repository.
+2. Open **Settings → Pages**.
+3. Select **Deploy from a branch**, choose `main` and the repository root, then save.
+4. Wait for the Pages deployment and open its published URL.
+
+The app uses relative asset paths and works when hosted from a project subpath. HTTPS is provided by GitHub Pages and is needed for service worker support.
+
+## Data layout
+
+```text
+data/
+	jamb.json
+	faculties.json
+	units.json
+	jamb/<subject-slug>.json
+	questions/<COURSE_CODE_WITH_UNDERSCORES>.json
+```
+
+Missing question files are handled as an empty bank and shown as “No questions yet, contribute on GitHub.” Content is kept out of the application code.
+
+## Optional local AI
+
+Install [Ollama](https://ollama.com), start a local Gemma model (for example, `ollama run gemma3`), then enable **Explain with local AI** after answering a question. The browser sends the question and its explanation to `http://localhost:11434/api/generate`. This is optional; browser CORS or local service settings may prevent the request, in which case the app shows a clear unavailable message. No question data is sent to a hosted AI service.
+
+## Contribute
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for the question format, content expectations, and pull-request steps. Only contribute material you created or are authorised to redistribute.
 
 ## Licence
-MIT
 
-
-## Features
-JAMB, WAEC/NECO, Post-UTME and university sections; timed mock CBT; progress history; library of links (MySchool and official sources, credited, not affiliated); offline support; ask/contribute via GitHub issues. Started in Gombe State and built for all of Nigeria.
-
-New: student tools (CGPA and Post-UTME aggregate calculators, study timer, weekly planner) and a business hub (profit and break-even calculator, business plan builder, ideas, registration steps).
-
-## Sign-in
-Optional sign-in with Google, Facebook, email and phone using Firebase Authentication. Paste your Firebase web config in `index.html` (`firebaseConfig`). Never commit private secrets.
-
-## Deploy
-GitHub Pages (Settings > Pages) or Firebase Hosting (`firebase deploy`). Add your domain under Firebase Authentication > Authorized domains.
+MIT. See [LICENSE](LICENSE).

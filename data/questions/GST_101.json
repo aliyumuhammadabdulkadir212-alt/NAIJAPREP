@@ -1,0 +1,7 @@
+[
+{"id":"gst101-01","topic":"Grammar","q":"A complete sentence normally contains at least a subject and a ___.","options":["finite verb","preposition","determiner","comma"],"answer":0,"explanation":"A basic independent clause has a subject and a finite verb."},
+{"id":"gst101-02","topic":"Vocabulary","q":"Choose the word closest in meaning to 'concise'.","options":["brief","unclear","lengthy","unrelated"],"answer":0,"explanation":"Concise means brief while still expressing the intended meaning."},
+{"id":"gst101-03","topic":"Study skills","q":"A useful first step when reading a long academic text is to ___.","options":["preview headings and structure","memorise every line","skip the title","read only the last sentence"],"answer":0,"explanation":"Previewing headings helps identify the structure and main ideas."},
+{"id":"gst101-04","topic":"Academic writing","q":"A paragraph should normally develop ___.","options":["one main idea","several unrelated topics","only quotations","a list without explanation"],"answer":0,"explanation":"A coherent paragraph focuses on one central idea with supporting details."},
+{"id":"gst101-05","topic":"Referencing","q":"Referencing a source in academic work helps readers ___.","options":["locate and verify the source","assume all ideas are original","avoid reading evidence","replace the conclusion"],"answer":0,"explanation":"References credit sources and let readers locate the material used."}
+]

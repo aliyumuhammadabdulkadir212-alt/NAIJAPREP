@@ -1,0 +1,19 @@
+{
+  "subjects": [
+    {"name":"English","slug":"english","topics":["Comprehension","Lexis and structure","Oral forms","Concord","Essay and summary","Literature texts"]},
+    {"name":"Mathematics","slug":"mathematics","topics":["Number and numeration","Algebra","Geometry and trigonometry","Calculus","Statistics and probability","Mensuration"]},
+    {"name":"Biology","slug":"biology","topics":["Cell biology","Nutrition","Reproduction","Genetics and evolution","Ecology","Diversity of organisms"]},
+    {"name":"Chemistry","slug":"chemistry","topics":["Atomic structure","Chemical bonding","Acids, bases and salts","Organic chemistry","Rates and equilibrium","Electrochemistry"]},
+    {"name":"Physics","slug":"physics","topics":["Mechanics","Heat","Waves and optics","Electricity","Magnetism","Modern physics"]},
+    {"name":"Government","slug":"government","topics":["Basic concepts","Constitutions","Arms of government","Political parties","Nigerian history and independence","International organisations"]},
+    {"name":"Economics","slug":"economics","topics":["Basic concepts","Demand and supply","Production","Money and banking","Public finance","International trade"]},
+    {"name":"Literature in English","slug":"literature-in-english","topics":["Drama","Prose","Poetry","Literary appreciation"]},
+    {"name":"CRK","slug":"crk","topics":["Creation and early history","Prophets and leaders","Life and teachings","Worship and ethics"]},
+    {"name":"IRK","slug":"irk","topics":["The Qur'an and revelation","Hadith and Sunnah","Articles of faith","Worship and moral conduct"]},
+    {"name":"Geography","slug":"geography","topics":["Physical geography","Human geography","Map reading","Regional geography of Nigeria"]},
+    {"name":"Commerce","slug":"commerce","topics":["Trade","Banking","Insurance","Transport and communication"]},
+    {"name":"Accounting","slug":"accounting","topics":["Double entry","Final accounts","Bank reconciliation","Partnership"]},
+    {"name":"Agricultural Science","slug":"agricultural-science","topics":["Crop production","Animal production","Farm management","Soil science"]},
+    {"name":"Further Mathematics","slug":"further-mathematics","topics":["Matrices and determinants","Vectors","Differentiation and integration","Probability distributions","Complex numbers"]}
+  ]
+}
