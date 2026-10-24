@@ -1,6 +1,6 @@
 /* Gombe Past Questions: small, data-driven static app. */
 const appRoot = document.querySelector('#app');
-const store = { screen: 'home', jamb: [], faculties: [], units: [], scores: [], theme: 'light', aiEnabled: false };
+const store = { screen: 'home', jamb: [], faculties: [], units: [], scores: [], theme: 'light', aiEnabled: false, chatHistory: safeRead('naija-chat-history', []), studyPlan: safeRead('naija-study-plan', null) };
 let session = null;
 let timerId = null;
 const dataCache = new Map();
@@ -44,7 +44,7 @@ function setScreen(name) {
 }
 function render() {
   document.documentElement.dataset.theme = store.theme;
-  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark">NS</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button><button class="text-button" data-action="contribute">Contribute</button></nav></header>`;
+  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark">NS</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="tutor">AI Tutor</button><button class="text-button" data-action="studyplan">Study Plan</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button><button class="text-button" data-action="contribute">Contribute</button></nav></header>`;
   const pages = {
     home: renderHome,
     jamb: renderJamb,
@@ -57,14 +57,16 @@ function render() {
     gst: renderGstPage,
     contribute: renderContribute,
     quiz: renderQuiz,
-    result: renderResult
+    result: renderResult,
+    tutor: renderTutor,
+    studyplan: renderStudyPlan
   };
   appRoot.innerHTML = `${header}<main>${(pages[store.screen] || renderHome)()}</main><footer>Independent practice material. Not affiliated with JAMB or any university.</footer>`;
   if (store.screen === 'quiz' && session?.kind === 'mock') startClock();
 }
 function renderHome() {
   const saved = store.scores.length;
-  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Original practice questions, clear explanations, and study paths for JAMB and Nigerian universities.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;
+  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Original practice questions, clear explanations, AI tutor that breaks problems down in under a minute, and personalized study plans for any course.</p><h2>Get started</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><div class="feature-grid" style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem"><button class="role-card" data-action="tutor" style="text-align:left"><span class="role-number">AI TUTOR</span><strong>Solve any problem step by step</strong><span>Get simple explanations even if you're struggling. Works with all courses.</span><span class="arrow">Ask now <b>↗</b></span></button><button class="role-card" data-action="studyplan" style="text-align:left"><span class="role-number">SMART PLAN</span><strong>Personalized study plan</strong><span>Tailored to your brain type &amp; available time. Choose, follow, upgrade.</span><span class="arrow">Build plan <b>↗</b></span></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;
 }
 function renderJamb() {
   return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">JAMB practice</p><h1>Choose a subject</h1><p>Pick a topic to focus your revision, or practise the whole subject.</p></div><div class="subject-grid">${store.jamb.map((subject, index) => `<button class="subject-tile" data-action="subject" data-index="${index}"><span class="tile-index">${String(index + 1).padStart(2, '0')}</span><strong>${escapeHtml(subject.name)}</strong><span>${subject.topics.length} syllabus topics <b>↗</b></span></button>`).join('')}</div><section class="mock-banner"><div><p class="eyebrow">Exam conditions</p><h2>Full mock exam</h2><p>Four subjects, English compulsory, timed CBT-style practice.</p></div>${button('Set up mock exam', 'mock', 'primary')}</section>`;
@@ -118,6 +120,20 @@ function renderContribute() {
   "answer": 0,
   "explanation": "Explain why the answer is correct."
 }</code></pre><p>Add optional <code>year</code> and <code>source</code> only when supplied by the contributor and permitted for sharing. See <code>CONTRIBUTING.md</code> for the full guide.</p></section>`;
+}
+
+function renderTutor() {
+  const history = store.chatHistory || [];
+  const messages = history.map(msg => `<div class="chat-msg ${msg.role === 'user' ? 'user' : 'assistant'}"><div class="chat-bubble"><strong>${msg.role === 'user' ? 'You' : 'Naija Scholar AI Tutor'}</strong><p>${escapeHtml(msg.content).replace(/\n/g, '<br>')}</p></div></div>`).join('');
+  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">AI Tutor</p><h1>Solve any problem step by step</h1><p>Ask any question from JAMB, university courses, or any subject. Get broken down in simple terms under a minute.</p></div><section class="tutor-section"><div class="chat-container" id="chat-container">${messages || '<p class="empty-note">Start by asking a question. e.g. "Explain quadratic equations like I\'m a beginner"</p>'}</div><form id="tutor-form" class="tutor-form"><textarea id="tutor-input" placeholder="Paste your question, upload problem, or describe what you need help with..." required></textarea><div class="tutor-actions"><label><input type="checkbox" id="tutor-ai-toggle" ${store.aiEnabled ? 'checked' : ''}> Use local AI (Ollama/Gemma)</label><button class="button primary" type="submit">Solve &amp; Explain</button><button class="button" type="button" data-action="clear-chat">Clear chat</button></div><p class="tutor-note">Local AI runs on your device via Ollama (localhost:11434). If unavailable, you'll get a structured explanation guide. No data leaves your device.</p></form></section>`;
+}
+
+function renderStudyPlan() {
+  const plan = store.studyPlan;
+  if (!plan) {
+    return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Smart Study Plan</p><h1>Personalized Study Plan</h1><p>Tailored to your brain type, intelligence level, time, and goals.</p></div><section class="plan-setup"><form id="plan-form"><div class="form-group"><label>Goal</label><select name="goal" required><option value="jamb">Ace JAMB/UTME</option><option value="exam">Pass university exam</option><option value="gpa">Boost GPA</option><option value="catchup">Catch up on missed topics</option></select></div><div class="form-group"><label>Course/Subjects</label><input type="text" name="subjects" placeholder="e.g. Mathematics, Physics, CSC 201" required></div><div class="form-group"><label>Available hours per day</label><select name="hours" required><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4+ hours</option></select></div><div class="form-group"><label>Brain/learning style</label><select name="style" required><option value="visual">Visual (diagrams, videos)</option><option value="auditory">Auditory (explain aloud)</option><option value="kinesthetic">Kinesthetic (practice/do)</option><option value="reading">Reading/Writing (notes)</option><option value="mixed">Mixed (all)</option></select></div><div class="form-group"><label>Intelligence/work capacity</label><select name="capacity" required><option value="low">Takes time to grasp (need more repetition)</option><option value="average">Average - steady pace</option><option value="high">Quick learner (can go faster)</option></select></div><div class="form-group"><label>Exam date (optional)</label><input type="date" name="examdate"></div><button class="button primary" type="submit">Generate Plan</button></form></section>`;
+  }
+  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Your Study Plan</p><h1>${escapeHtml(plan.goalLabel)} Plan</h1><p>Based on ${escapeHtml(plan.style)} learning style, ${escapeHtml(plan.capacityLabel)} pace • ${plan.hours}h/day</p></div><section class="plan-active"><div class="plan-overview"><div><strong>Focus</strong><p>${escapeHtml(plan.subjects)}</p></div>${plan.examdate ? `<div><strong>Days to exam</strong><p>${plan.daysToExam} days</p></div>` : ''}<div><strong>Plan type</strong><p>${plan.tier}</p></div></div><h2>Weekly schedule</h2><div class="plan-weeks">${plan.weeks.map((week, i) => `<details class="plan-week" ${i === 0 ? 'open' : ''}><summary>Week ${i+1} - ${week.focus}</summary><div class="week-content">${week.days.map(day => `<div class="day-block"><strong>${day.day}</strong><ul>${day.tasks.map(task => `<li>${escapeHtml(task)}</li>`).join('')}</ul></div>`).join('')}</div></details>`).join('')}</div><div class="plan-actions"><button class="button" data-action="regenerate-plan">Regenerate with tweaks</button><button class="button primary" data-action="upgrade-plan">Upgrade plan</button><button class="button" data-action="clear-plan">Start fresh</button></div><p class="plan-note">Tip: Do practice questions daily. Use the AI Tutor for anything you don't understand - break it down until it clicks!</p></section>`;
 }
 function renderMissing(message) { return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="empty-note">${escapeHtml(message)}</p></div>`; }
 function renderQuiz() {
@@ -294,7 +310,22 @@ document.addEventListener('click', async event => {
   if (action === 'next-mock') { session.index = Math.min(session.questions.length - 1, session.index + 1); render(); }
   if (action === 'submit-mock') finishPractice();
   if (action === 'explain-ai') explainWithAi(control);
+  if (action === 'tutor') { store.screen = 'tutor'; render(); }
+  if (action === 'studyplan') { store.screen = 'studyplan'; render(); }
+  if (action === 'clear-chat') { store.chatHistory = []; safeWrite('naija-chat-history', store.chatHistory); render(); }
+  if (action === 'regenerate-plan') { store.studyPlan = null; safeWrite('naija-study-plan', null); render(); }
+  if (action === 'clear-plan') { store.studyPlan = null; safeWrite('naija-study-plan', null); render(); }
+  if (action === 'upgrade-plan') { if (store.studyPlan) { store.studyPlan.tier = store.studyPlan.tier === 'Free' ? 'Pro (more intensive)' : store.studyPlan.tier + '+'; store.studyPlan.weeks = upgradePlanWeeks(store.studyPlan); safeWrite('naija-study-plan', store.studyPlan); render(); } }
 });
+function upgradePlanWeeks(plan) {
+  return plan.weeks.map(week => ({
+    ...week,
+    days: week.days.map(day => ({
+      ...day,
+      tasks: [...day.tasks, 'AI Tutor: Solve 2-3 past-style questions and explain mistakes']
+    }))
+  }));
+}
 document.addEventListener('input', event => {
   if (event.target.id === 'course-search') updateSearch(event.target.value);
 });
@@ -302,13 +333,109 @@ document.addEventListener('change', event => {
   if (event.target.dataset.action === 'ai-toggle') { store.aiEnabled = event.target.checked; render(); }
 });
 document.addEventListener('submit', event => {
-  if (event.target.id !== 'mock-form') return;
-  event.preventDefault();
-  const selected = [...event.target.querySelectorAll('input[name="mock-subject"]:checked')].map(input => input.value);
-  const error = document.querySelector('#mock-error');
-  if (selected.length !== 3) { error.textContent = 'Choose exactly three subjects in addition to compulsory English.'; return; }
-  beginMock(selected);
+  if (event.target.id === 'mock-form') {
+    event.preventDefault();
+    const selected = [...event.target.querySelectorAll('input[name="mock-subject"]:checked')].map(input => input.value);
+    const error = document.querySelector('#mock-error');
+    if (selected.length !== 3) { error.textContent = 'Choose exactly three subjects in addition to compulsory English.'; return; }
+    beginMock(selected);
+    return;
+  }
+  if (event.target.id === 'tutor-form') {
+    event.preventDefault();
+    const input = document.querySelector('#tutor-input');
+    const question = input.value.trim();
+    if (!question) return;
+    const useAi = document.querySelector('#tutor-ai-toggle')?.checked;
+    store.chatHistory.push({ role: 'user', content: question });
+    store.chatHistory.push({ role: 'assistant', content: 'Thinking... Breaking this down step by step for you.' });
+    safeWrite('naija-chat-history', store.chatHistory);
+    render();
+    setTimeout(() => {
+      const container = document.querySelector('#chat-container');
+      if (container) container.scrollTop = container.scrollHeight;
+    }, 50);
+    (async () => {
+      let answer;
+      if (useAi && store.aiEnabled) {
+        try {
+          const response = await fetch('http://localhost:11434/api/generate', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `You are Naija Scholar AI Tutor. Solve this student's problem step by step in simple, easy-to-understand Nigerian-friendly language. Break it down so even a beginner can understand. Give clear steps, final answer, and tips to remember. Question: ${question}` }),
+            signal: AbortSignal.timeout(30000)
+          });
+          if (response.ok) {
+            const result = await response.json();
+            answer = result.response || '';
+          }
+        } catch {}
+      }
+      if (!answer) {
+        answer = `Step 1: Understand the question\n- Identify what you're being asked for\n- List knowns and unknowns\n\nStep 2: Approach\n- Recall relevant concept/formula\n- Break into smaller parts\n\nStep 3: Solution\n- Work through each part clearly\n- Show calculations/reasoning\n\nStep 4: Verify & Explain\n- Check if answer makes sense\n- Key takeaway in simple words\n\nFor: "${question}"\n\nTip: Tell me more details (course, topic, level) or use "Explain with local AI (Ollama)" for a custom breakdown. You can also practice similar questions in JAMB/University sections.`;
+      }
+      store.chatHistory[store.chatHistory.length - 1] = { role: 'assistant', content: answer };
+      safeWrite('naija-chat-history', store.chatHistory);
+      render();
+      setTimeout(() => {
+        const container = document.querySelector('#chat-container');
+        if (container) container.scrollTop = container.scrollHeight;
+      }, 50);
+    })();
+    input.value = '';
+    return;
+  }
+  if (event.target.id === 'plan-form') {
+    event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
+    const goal = data.get('goal');
+    const subjects = data.get('subjects');
+    const hours = Number(data.get('hours'));
+    const style = data.get('style');
+    const capacity = data.get('capacity');
+    const examdate = data.get('examdate');
+    const goalLabels = { jamb: 'JAMB/UTME', exam: 'Exam', gpa: 'GPA Boost', catchup: 'Catch-up' };
+    const capacityLabels = { low: 'Gentle', average: 'Steady', high: 'Accelerated' };
+    let daysToExam = null;
+    if (examdate) {
+      const diff = Math.ceil((new Date(examdate) - new Date()) / (1000*60*60*24));
+      if (diff > 0) daysToExam = diff;
+    }
+    const weeks = generateStudyPlan({ goal, subjects, hours, style, capacity, daysToExam });
+    store.studyPlan = { goal, goalLabel: goalLabels[goal], subjects, hours, style, capacity, capacityLabel: capacityLabels[capacity], examdate, daysToExam, tier: 'Free', weeks, created: new Date().toISOString() };
+    safeWrite('naija-study-plan', store.studyPlan);
+    render();
+    return;
+  }
 });
+
+function generateStudyPlan({ goal, subjects, hours, style, capacity, daysToExam }) {
+  const baseTasks = {
+    visual: ['Watch/read diagrams', 'Create mind maps', 'Use color-coded notes'],
+    auditory: ['Explain topics aloud', 'Use mnemonics aloud', 'Discuss with study group'],
+    kinesthetic: ['Solve questions immediately', 'Practice past questions', 'Teach someone else'],
+    reading: ['Read notes thoroughly', 'Summarize each topic', 'Make flashcards'],
+    mixed: ['Mix notes, practice & explanation']
+  };
+  const intensity = capacity === 'high' ? 1.5 : capacity === 'low' ? 0.7 : 1;
+  const tasks = baseTasks[style] || baseTasks.mixed;
+  const weeks = [];
+  const weekCount = daysToExam && daysToExam < 30 ? 4 : 8;
+  for (let w = 0; w < weekCount; w++) {
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(day => {
+      if (day === 'Sun') {
+        return { day, tasks: [`Review weak topics from this week (${Math.round(hours*0.5)}h)`, 'Rest/light revision', 'Plan next week'] };
+      }
+      return { day, tasks: [
+        `Focus: ${subjects.split(',')[0].trim()} - ${tasks[0]} (${Math.round(hours*intensity*0.4)}h)`,
+        `Practice: Solve questions (${Math.round(hours*intensity*0.4)}h)`,
+        `AI Tutor: Fix mistakes & clarify (${Math.round(hours*intensity*0.2)}h)`
+      ] };
+    });
+    weeks.push({ focus: w === 0 ? 'Foundation' : w < 3 ? 'Build & Practice' : w < weekCount-1 ? 'Intensive Revision' : 'Final Polish', days });
+  }
+  return weeks;
+}
 
 async function initialise() {
   store.theme = safeRead('gombe-theme', 'light');
