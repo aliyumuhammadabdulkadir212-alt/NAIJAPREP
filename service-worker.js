@@ -1,4 +1,4 @@
-const CACHE_NAME = 'naija-scholar-v4';
+const CACHE_NAME = 'naija-scholar-v5';
 const APP_FILES = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest', './data/jamb.json', './data/faculties.json', './data/units.json', './data/library.json',
   './data/jamb/english.json', './data/jamb/mathematics.json', './data/jamb/biology.json', './data/jamb/chemistry.json', './data/jamb/physics.json',
   './data/jamb/government.json', './data/jamb/economics.json', './data/jamb/literature-in-english.json', './data/jamb/crk.json', './data/jamb/irk.json',
