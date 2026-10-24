@@ -1,6 +1,10 @@
-/* Gombe Past Questions: small, data-driven static app. */
+/* Naija Scholar: small, data-driven static app. */
 const appRoot = document.querySelector('#app');
+<<<<<<< HEAD
 const store = { screen: 'home', jamb: [], faculties: [], units: [], scores: [], theme: 'light', aiEnabled: false, chatHistory: safeRead('naija-chat-history', []), studyPlan: safeRead('naija-study-plan', null) };
+=======
+const store = { screen: 'home', jamb: [], faculties: [], units: [], library: [], scores: [], theme: 'light', aiEnabled: false };
+>>>>>>> 44f576285f924b48c49b04215ffcfed61cc3c80e
 let session = null;
 let timerId = null;
 const dataCache = new Map();
@@ -44,9 +48,14 @@ function setScreen(name) {
 }
 function render() {
   document.documentElement.dataset.theme = store.theme;
+<<<<<<< HEAD
   const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark">NS</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="tutor">AI Tutor</button><button class="text-button" data-action="studyplan">Study Plan</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button><button class="text-button" data-action="contribute">Contribute</button></nav></header>`;
+=======
+  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark" aria-hidden="true">🎓</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="library">Study library</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button><button class="text-button" data-action="contribute">Contribute</button></nav></header>`;
+>>>>>>> 44f576285f924b48c49b04215ffcfed61cc3c80e
   const pages = {
     home: renderHome,
+    library: renderLibrary,
     jamb: renderJamb,
     subject: renderSubject,
     mock: renderMockSetup,
@@ -66,7 +75,11 @@ function render() {
 }
 function renderHome() {
   const saved = store.scores.length;
+<<<<<<< HEAD
   return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Original practice questions, clear explanations, AI tutor that breaks problems down in under a minute, and personalized study plans for any course.</p><h2>Get started</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><div class="feature-grid" style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem"><button class="role-card" data-action="tutor" style="text-align:left"><span class="role-number">AI TUTOR</span><strong>Solve any problem step by step</strong><span>Get simple explanations even if you're struggling. Works with all courses.</span><span class="arrow">Ask now <b>↗</b></span></button><button class="role-card" data-action="studyplan" style="text-align:left"><span class="role-number">SMART PLAN</span><strong>Personalized study plan</strong><span>Tailored to your brain type &amp; available time. Choose, follow, upgrade.</span><span class="arrow">Build plan <b>↗</b></span></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;
+=======
+  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Original practice questions, clear explanations, and study paths for JAMB and Nigerian universities.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div><button class="button small library-entry" data-action="library">Browse the study library</button></section>`;
+>>>>>>> 44f576285f924b48c49b04215ffcfed61cc3c80e
 }
 function renderJamb() {
   return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">JAMB practice</p><h1>Choose a subject</h1><p>Pick a topic to focus your revision, or practise the whole subject.</p></div><div class="subject-grid">${store.jamb.map((subject, index) => `<button class="subject-tile" data-action="subject" data-index="${index}"><span class="tile-index">${String(index + 1).padStart(2, '0')}</span><strong>${escapeHtml(subject.name)}</strong><span>${subject.topics.length} syllabus topics <b>↗</b></span></button>`).join('')}</div><section class="mock-banner"><div><p class="eyebrow">Exam conditions</p><h2>Full mock exam</h2><p>Four subjects, English compulsory, timed CBT-style practice.</p></div>${button('Set up mock exam', 'mock', 'primary')}</section>`;
@@ -83,6 +96,32 @@ function renderMockSetup() {
 function renderUniversity() {
   const courses = allCourses();
   return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">University practice</p><h1>Find your course</h1><p>Browse faculties, or search course names and codes.</p></div><label class="search-box"><span aria-hidden="true">⌕</span><input id="course-search" type="search" aria-label="Search courses and course codes" placeholder="Search e.g. Computer Science, CSC 201" autocomplete="off"><button type="button" class="clear-search" data-action="clear-search" aria-label="Clear search">×</button></label><div id="search-results" class="search-results"></div><h2 class="section-title">Faculties</h2><div class="faculty-grid">${store.faculties.map((faculty, index) => `<button class="faculty-tile" data-action="faculty" data-index="${index}"><strong>${escapeHtml(faculty.name)}</strong><span>${faculty.courses.length} programmes <b>↗</b></span></button>`).join('')}</div><div class="gst-strip"><div><strong>General Studies (GST)</strong><span>Shared course units for students across faculties</span></div><button class="button small" data-action="gst">Browse GST units</button></div>`;
+}
+function renderLibrary() {
+  const types = [...new Set(store.library.map(item => item.type).filter(Boolean))].sort();
+  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Study library</h1><p>Useful free and open learning links for JAMB candidates and university students. Resources open on their original websites.</p></div><div class="library-filters"><label class="search-box"><span aria-hidden="true">⌕</span><input id="library-search" type="search" aria-label="Search study resources" placeholder="Search books, courses, scholarships…" autocomplete="off"></label><label class="library-type-label"><span>Resource type</span><select id="library-type"><option value="">All resources</option>${types.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type.replaceAll('-', ' '))}</option>`).join('')}</select></label></div><div id="library-results" class="library-grid"></div>`;
+}
+function safeExternalUrl(value) {
+  try {
+    const url = new URL(value);
+    return ['https:', 'http:'].includes(url.protocol) ? escapeHtml(url.href) : '';
+  } catch {
+    return '';
+  }
+}
+function updateLibraryResults() {
+  const results = document.querySelector('#library-results');
+  if (!results) return;
+  const query = (document.querySelector('#library-search')?.value || '').trim().toLowerCase();
+  const type = document.querySelector('#library-type')?.value || '';
+  const matching = store.library.filter(item => {
+    const text = [item.title, item.type, item.subject, item.course, item.level, item.source, ...(item.audience || [])].filter(Boolean).join(' ').toLowerCase();
+    return (!type || item.type === type) && (!query || text.includes(query));
+  });
+  results.innerHTML = matching.map(item => {
+    const url = safeExternalUrl(item.url);
+    return `<article class="library-card"><div class="library-card-top"><span class="library-category">${escapeHtml((item.type || 'resource').replaceAll('-', ' '))}</span><span class="library-level">${escapeHtml(item.level || 'All levels')}</span></div><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml((item.audience || []).join(' · ') || 'All students')}${item.subject && item.subject !== 'Multiple' ? ` · ${escapeHtml(item.subject)}` : ''}</p><div class="library-card-foot"><span>${escapeHtml(item.source || 'Open resource')}</span>${url ? `<a href="${url}" target="_blank" rel="noopener noreferrer">Visit resource <b>↗</b></a>` : '<span>Link unavailable</span>'}</div></article>`;
+  }).join('') || '<p class="empty-note">No resources match your search.</p>';
 }
 function allCourses() {
   return store.faculties.flatMap(faculty => faculty.courses.map(course => ({ name: course, faculty: faculty.name })));
@@ -290,6 +329,7 @@ document.addEventListener('click', async event => {
   if (action === 'jamb') setScreen('jamb');
   if (action === 'university') setScreen('university');
   if (action === 'contribute') setScreen('contribute');
+  if (action === 'library') { setScreen('library'); updateLibraryResults(); }
   if (action === 'mock') setScreen('mock');
   if (action === 'subject') { store.selectedSubject = Number(control.dataset.index); setScreen('subject'); }
   if (action === 'practice-subject') practiseSubject();
@@ -328,9 +368,11 @@ function upgradePlanWeeks(plan) {
 }
 document.addEventListener('input', event => {
   if (event.target.id === 'course-search') updateSearch(event.target.value);
+  if (event.target.id === 'library-search') updateLibraryResults();
 });
 document.addEventListener('change', event => {
   if (event.target.dataset.action === 'ai-toggle') { store.aiEnabled = event.target.checked; render(); }
+  if (event.target.id === 'library-type') updateLibraryResults();
 });
 document.addEventListener('submit', event => {
   if (event.target.id === 'mock-form') {
@@ -440,10 +482,11 @@ function generateStudyPlan({ goal, subjects, hours, style, capacity, daysToExam 
 async function initialise() {
   store.theme = safeRead('gombe-theme', 'light');
   store.scores = safeRead('gombe-practice-scores', []);
-  const [jamb, faculties, units] = await Promise.all([readJson('data/jamb.json'), readJson('data/faculties.json'), readJson('data/units.json')]);
+  const [jamb, faculties, units, library] = await Promise.all([readJson('data/jamb.json'), readJson('data/faculties.json'), readJson('data/units.json'), readJson('data/library.json')]);
   store.jamb = jamb?.subjects || [];
   store.faculties = faculties?.faculties || [];
   store.units = units || { courses: [], gst: [] };
+  store.library = Array.isArray(library) ? library : [];
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     navigator.serviceWorker.register('./service-worker.js').catch(() => {});

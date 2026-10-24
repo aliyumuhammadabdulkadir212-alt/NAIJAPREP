@@ -1,6 +1,6 @@
 # Naija Scholar
 
-An open-source, phone-friendly practice app for JAMB candidates and Nigerian university students. It is a static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
+An open-source, phone-friendly study platform for JAMB candidates and university students across Nigeria, first built for learners in Gombe State. It is a single-page static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
 
 ## Why this app
 
@@ -9,6 +9,7 @@ Students can face barriers such as the cost or availability of study materials, 
 ## What it includes
 
 - A starting choice for JAMB candidates and university students.
+- A searchable study library of 22 learning links, official portals, scholarships, and study resources in the same app.
 - 15 JAMB subjects, syllabus topics, topic-tagged original practice questions, and explanations.
 - Subject and topic practice, plus a timed CBT-style mock with English and three selected subjects.
 - University faculty and course browsing, levels 100–500 (and 600 for Medicine), course-unit search, and General Studies units.
@@ -30,10 +31,10 @@ Then visit `http://localhost:8000`. You can also use the Live Server extension i
 
 ## Deploy to GitHub Pages
 
-1. Push the project to a GitHub repository.
-2. Open **Settings → Pages**.
-3. Select **Deploy from a branch**, choose `main` and the repository root, then save.
-4. Wait for the Pages deployment and open its published URL.
+1. Push the project to a GitHub repository with the Pages workflow enabled.
+2. Open **Settings → Pages** and select **GitHub Actions** as the build and deployment source if GitHub has not selected it automatically.
+3. Open the **Actions** tab and wait for **Deploy Naija Scholar to GitHub Pages** to complete.
+4. Open the published URL shown in the workflow's `github-pages` deployment environment.
 
 The app uses relative asset paths and works when hosted from a project subpath. HTTPS is provided by GitHub Pages and is needed for service worker support.
 
@@ -44,6 +45,7 @@ data/
 	jamb.json
 	faculties.json
 	units.json
+	library.json
 	jamb/<subject-slug>.json
 	questions/<COURSE_CODE_WITH_UNDERSCORES>.json
 ```

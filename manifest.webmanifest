@@ -1,10 +1,10 @@
 {
   "name": "Naija Scholar",
   "short_name": "Naija Scholar",
-  "description": "Learn. Pass. Succeed. Free exam prep for JAMB candidates and Nigerian university students.",
+  "description": "Free original study practice for JAMB candidates and university students in Nigeria.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f7f5ef",
-  "theme_color": "#1f6b4a",
+  "background_color": "#f5f4ee",
+  "theme_color": "#1f6947",
   "icons": []
 }
