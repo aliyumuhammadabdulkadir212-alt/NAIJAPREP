@@ -1,0 +1,7 @@
+[
+{"id":"csc101-01","topic":"Computer fundamentals","q":"Which component executes program instructions?","options":["CPU","Monitor","Keyboard","Printer"],"answer":0,"explanation":"The central processing unit fetches, decodes, and executes instructions."},
+{"id":"csc101-02","topic":"Computer fundamentals","q":"Which unit is commonly used to represent 1,024 bytes?","options":["Kilobyte","Megabyte","Gigabyte","Terabyte"],"answer":0,"explanation":"In the traditional binary convention, 1,024 bytes is one kilobyte."},
+{"id":"csc101-03","topic":"Data representation","q":"What is the decimal value of binary 1010?","options":["8","10","12","14"],"answer":1,"explanation":"1010₂ = 1×8 + 0×4 + 1×2 + 0×1 = 10."},
+{"id":"csc101-04","topic":"Software","q":"Which is an example of system software?","options":["Operating system","Word-processing document","Photograph","Spreadsheet cell"],"answer":0,"explanation":"An operating system manages computer hardware and provides services to applications."},
+{"id":"csc101-05","topic":"Networks","q":"A network covering a small area such as one office is usually a ___.","options":["LAN","WAN","GAN","PAN only"],"answer":0,"explanation":"A local area network connects devices across a limited area."}
+]

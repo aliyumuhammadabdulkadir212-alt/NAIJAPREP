@@ -1,0 +1,7 @@
+[
+{"id":"acc201-01","topic":"Financial statements","q":"Gross profit is generally calculated as net sales less ___.","options":["cost of goods sold","capital","drawings","current liabilities"],"answer":0,"explanation":"Gross profit is net sales minus the cost of goods sold."},
+{"id":"acc201-02","topic":"Adjustments","q":"An expense incurred but not yet paid is recorded as an ___.","options":["accrual","prepayment","asset disposal","capital contribution"],"answer":0,"explanation":"An accrued expense is recognised as an expense and liability."},
+{"id":"acc201-03","topic":"Cost accounting","q":"Direct materials and direct labour are examples of ___.","options":["prime cost elements","selling overhead only","capital receipts","current assets"],"answer":0,"explanation":"Prime cost comprises direct materials, direct labour, and direct expenses."},
+{"id":"acc201-04","topic":"Cost accounting","q":"A cost that remains constant in total within a relevant range is a ___ cost.","options":["fixed","variable","marginal","sunk only"],"answer":0,"explanation":"Fixed costs remain constant in total over the relevant activity range."},
+{"id":"acc201-05","topic":"Reconciliation","q":"A bank charge shown on the bank statement but absent from the cash book should be ___.","options":["entered as a cash book payment","entered as a cash book receipt","ignored permanently","added to inventory"],"answer":0,"explanation":"The bank charge reduces the bank balance and must be entered as a payment in the cash book."}
+]

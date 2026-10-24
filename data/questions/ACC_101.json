@@ -1,0 +1,7 @@
+[
+{"id":"acc101-01","topic":"Double entry","q":"Under double-entry bookkeeping, each transaction affects at least ___.","options":["two accounts","one account only","five ledgers","one bank statement"],"answer":0,"explanation":"Every transaction has debit and credit effects recorded in at least two accounts."},
+{"id":"acc101-02","topic":"Accounting equation","q":"The accounting equation is ___.","options":["Assets = Capital + Liabilities","Assets = Income - Expenses","Capital = Sales + Purchases","Liabilities = Assets + Capital"],"answer":0,"explanation":"Assets are financed by capital and liabilities."},
+{"id":"acc101-03","topic":"Source documents","q":"A document acknowledging cash received is a ___.","options":["receipt","quotation","purchase order","statement of account"],"answer":0,"explanation":"A receipt confirms that payment has been received."},
+{"id":"acc101-04","topic":"Ledger accounts","q":"An increase in an asset account is normally recorded on the ___ side.","options":["debit","credit","balance only","memo"],"answer":0,"explanation":"Asset increases are debited under the usual double-entry rules."},
+{"id":"acc101-05","topic":"Trial balance","q":"A trial balance is prepared mainly to check the arithmetical agreement of ___.","options":["ledger balances","sales forecasts","bank loans","stock units"],"answer":0,"explanation":"The trial balance compares debit and credit balances extracted from the ledger."}
+]

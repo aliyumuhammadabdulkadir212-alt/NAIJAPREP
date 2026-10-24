@@ -1,0 +1,12 @@
+{
+  "faculties": [
+    {"name":"Science","courses":["Biochemistry","Biology","Chemistry","Computer Science","Mathematics","Microbiology","Physics","Statistics"]},
+    {"name":"Engineering","courses":["Civil Engineering","Computer Engineering","Electrical Engineering","Mechanical Engineering"]},
+    {"name":"Social and Management Sciences","courses":["Accounting","Business Administration","Economics","Mass Communication","Political Science","Sociology"]},
+    {"name":"Arts and Humanities","courses":["English","History","Islamic Studies","Christian Religious Studies","Arabic","Linguistics"]},
+    {"name":"Law","courses":["Law"]},
+    {"name":"Education","courses":["Education (Mathematics)","Education (English)","Education (Biology)"]},
+    {"name":"Agriculture","courses":["Agriculture","Agricultural Economics"]},
+    {"name":"Health Sciences","courses":["Medicine and Surgery","Nursing","Medical Laboratory Science","Pharmacy"]}
+  ]
+}

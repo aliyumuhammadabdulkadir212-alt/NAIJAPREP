@@ -1,0 +1,13 @@
+{
+  "courses": [
+    {"name":"Computer Science","levels":{"100":[{"code":"CSC 101","title":"Introduction to Computer Science"},{"code":"CSC 102","title":"Computer Programming I"},{"code":"MTH 101","title":"Elementary Mathematics I"}],"200":[{"code":"CSC 201","title":"Programming Fundamentals"},{"code":"CSC 202","title":"Computer Organisation"},{"code":"CSC 203","title":"Discrete Structures"}],"300":[{"code":"CSC 301","title":"Data Structures and Algorithms"},{"code":"CSC 302","title":"Operating Systems"},{"code":"CSC 303","title":"Database Systems"}],"400":[{"code":"CSC 401","title":"Software Engineering"},{"code":"CSC 402","title":"Computer Networks"},{"code":"CSC 499","title":"Research Project"}],"500":[{"code":"CSC 501","title":"Advanced Computing Topics"}]}},
+    {"name":"Accounting","levels":{"100":[{"code":"ACC 101","title":"Principles of Accounting I"},{"code":"ACC 102","title":"Principles of Accounting II"},{"code":"ECO 101","title":"Principles of Economics"}],"200":[{"code":"ACC 201","title":"Financial Accounting"},{"code":"ACC 202","title":"Cost Accounting"}],"300":[{"code":"ACC 301","title":"Auditing"},{"code":"ACC 302","title":"Taxation"}],"400":[{"code":"ACC 401","title":"Advanced Financial Reporting"},{"code":"ACC 499","title":"Research Project"}],"500":[{"code":"ACC 501","title":"Advanced Management Accounting"}]}}
+  ],
+  "gst": [
+    {"code":"GST 101","title":"Use of English I"},
+    {"code":"GST 102","title":"Use of English II"},
+    {"code":"GST 201","title":"Nigerian Peoples and Culture"},
+    {"code":"GST 202","title":"Peace Studies and Conflict Resolution"},
+    {"code":"GST 301","title":"Entrepreneurship Studies"}
+  ]
+}
