@@ -1,5 +1,5 @@
-const CACHE_NAME = 'naija-scholar-v2';
-const APP_FILES = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest', './data/jamb.json', './data/faculties.json', './data/units.json',
+const CACHE_NAME = 'naija-scholar-v3';
+const APP_FILES = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest', './data/jamb.json', './data/faculties.json', './data/units.json', './data/library.json',
   './data/jamb/english.json', './data/jamb/mathematics.json', './data/jamb/biology.json', './data/jamb/chemistry.json', './data/jamb/physics.json',
   './data/jamb/government.json', './data/jamb/economics.json', './data/jamb/literature-in-english.json', './data/jamb/crk.json', './data/jamb/irk.json',
   './data/jamb/geography.json', './data/jamb/commerce.json', './data/jamb/accounting.json', './data/jamb/agricultural-science.json', './data/jamb/further-mathematics.json',

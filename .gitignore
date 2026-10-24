@@ -1,0 +1,20 @@
+# Naija Scholar .gitignore
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+
+# Node (if anyone adds a dev server later)
+node_modules/
+npm-debug.log*
+
+# Local env
+.env
+.env.local
+
+# Firebase deploy artifacts
+.firebase/

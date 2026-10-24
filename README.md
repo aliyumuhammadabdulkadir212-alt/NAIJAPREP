@@ -9,6 +9,7 @@ Students can face barriers such as the cost or availability of study materials, 
 ## What it includes
 
 - A starting choice for JAMB candidates and university students.
+- A searchable study library of 22 learning links, official portals, scholarships, and study resources in the same app.
 - 15 JAMB subjects, syllabus topics, topic-tagged original practice questions, and explanations.
 - Subject and topic practice, plus a timed CBT-style mock with English and three selected subjects.
 - University faculty and course browsing, levels 100–500 (and 600 for Medicine), course-unit search, and General Studies units.
@@ -44,6 +45,7 @@ data/
 	jamb.json
 	faculties.json
 	units.json
+	library.json
 	jamb/<subject-slug>.json
 	questions/<COURSE_CODE_WITH_UNDERSCORES>.json
 ```
