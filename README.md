@@ -1,6 +1,6 @@
-# Gombe Past Questions
+# Naija Scholar
 
-An open-source, phone-friendly practice app for JAMB candidates and university students in Gombe State, Nigeria. It is a static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
+An open-source, phone-friendly study platform for JAMB candidates and university students across Nigeria, first built for learners in Gombe State. It is a single-page static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
 
 ## Why this app
 
@@ -30,10 +30,10 @@ Then visit `http://localhost:8000`. You can also use the Live Server extension i
 
 ## Deploy to GitHub Pages
 
-1. Push the project to a GitHub repository.
-2. Open **Settings → Pages**.
-3. Select **Deploy from a branch**, choose `main` and the repository root, then save.
-4. Wait for the Pages deployment and open its published URL.
+1. Push the project to a GitHub repository with the Pages workflow enabled.
+2. Open **Settings → Pages** and select **GitHub Actions** as the build and deployment source if GitHub has not selected it automatically.
+3. Open the **Actions** tab and wait for **Deploy Naija Scholar to GitHub Pages** to complete.
+4. Open the published URL shown in the workflow's `github-pages` deployment environment.
 
 The app uses relative asset paths and works when hosted from a project subpath. HTTPS is provided by GitHub Pages and is needed for service worker support.
 
