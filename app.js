@@ -1,6 +1,7 @@
 /* Naija Scholar: small, data-driven static app. */
 const appRoot = document.querySelector('#app');
-const store = { screen: 'home', jamb: [], faculties: [], units: [], library: [], scores: [], theme: 'light', aiEnabled: false };let session = null;
+const store = { screen: 'home', jamb: [], faculties: [], units: [], library: [], scores: [], theme: 'light', aiEnabled: false, chatHistory: safeRead('naija-chat-history', []), studyPlan: safeRead('naija-study-plan', null), streak: safeRead('naija-streak', []), cgpaCourses: safeRead('naija-cgpa-courses', []) };
+let session = null;
 let timerId = null;
 const dataCache = new Map();
 
@@ -43,7 +44,8 @@ function setScreen(name) {
 }
 function render() {
   document.documentElement.dataset.theme = store.theme;
-  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark" aria-hidden="true">🎓</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="library">Study library</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button><button class="text-button" data-action="contribute">Contribute</button></nav></header>`;  const pages = {
+  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark" aria-hidden="true">🎓</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="tutor">AI Tutor</button><button class="text-button" data-action="studyplan">Study plan</button><button class="text-button" data-action="library">Library</button><button class="text-button nav-secondary" data-action="streak">Streak</button><button class="text-button nav-secondary" data-action="cgpa">CGPA</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button></nav></header>`;
+  const pages = {
     home: renderHome,
     library: renderLibrary,
     jamb: renderJamb,
@@ -58,14 +60,17 @@ function render() {
     quiz: renderQuiz,
     result: renderResult,
     tutor: renderTutor,
-    studyplan: renderStudyPlan
+    studyplan: renderStudyPlan,
+    streak: renderStreak,
+    cgpa: renderCgpa
   };
   appRoot.innerHTML = `${header}<main>${(pages[store.screen] || renderHome)()}</main><footer>Independent practice material. Not affiliated with JAMB or any university.</footer>`;
   if (store.screen === 'quiz' && session?.kind === 'mock') startClock();
 }
 function renderHome() {
   const saved = store.scores.length;
-  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Original practice questions, clear explanations, and study paths for JAMB and Nigerian universities.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div><button class="button small library-entry" data-action="library">Browse the study library</button></section>`;}
+  const streak = currentStreak();
+  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Practice questions, an AI tutor that breaks problems down in under a minute, smart study plans, and tools that keep you consistent.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><h2 class="section-title">Student tools</h2><div class="tool-grid"><button class="tool-card" data-action="tutor"><span class="role-number">AI TUTOR</span><strong>Solve any problem</strong><span>Step-by-step breakdown for any course. Gemma 3 via Ollama.</span><b class="arrow">Ask now ↗</b></button><button class="tool-card" data-action="studyplan"><span class="role-number">SMART PLAN</span><strong>Personal study plan</strong><span>Built around your learning style, pace, and exam date.</span><b class="arrow">Build plan ↗</b></button><button class="tool-card" data-action="streak"><span class="role-number">STREAK</span><strong>${streak} day streak</strong><span>Mark today's study session and keep the chain alive.</span><b class="arrow">Open tracker ↗</b></button><button class="tool-card" data-action="cgpa"><span class="role-number">CGPA</span><strong>CGPA calculator</strong><span>Add courses and grades to estimate your GPA on a 5-point scale.</span><b class="arrow">Calculate ↗</b></button><button class="tool-card" data-action="library"><span class="role-number">LIBRARY</span><strong>Study library</strong><span>Free past questions, textbooks, courses, and developer docs.</span><b class="arrow">Browse ↗</b></button><button class="tool-card" data-action="contribute"><span class="role-number">CONTRIBUTE</span><strong>Help other students</strong><span>Add original questions or improve the project on GitHub.</span><b class="arrow">Get involved ↗</b></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;}
 function renderJamb() {
   return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">JAMB practice</p><h1>Choose a subject</h1><p>Pick a topic to focus your revision, or practise the whole subject.</p></div><div class="subject-grid">${store.jamb.map((subject, index) => `<button class="subject-tile" data-action="subject" data-index="${index}"><span class="tile-index">${String(index + 1).padStart(2, '0')}</span><strong>${escapeHtml(subject.name)}</strong><span>${subject.topics.length} syllabus topics <b>↗</b></span></button>`).join('')}</div><section class="mock-banner"><div><p class="eyebrow">Exam conditions</p><h2>Full mock exam</h2><p>Four subjects, English compulsory, timed CBT-style practice.</p></div>${button('Set up mock exam', 'mock', 'primary')}</section>`;
 }
@@ -158,6 +163,54 @@ function renderStudyPlan() {
     return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Smart Study Plan</p><h1>Personalized Study Plan</h1><p>Tailored to your brain type, intelligence level, time, and goals.</p></div><section class="plan-setup"><form id="plan-form"><div class="form-group"><label>Goal</label><select name="goal" required><option value="jamb">Ace JAMB/UTME</option><option value="exam">Pass university exam</option><option value="gpa">Boost GPA</option><option value="catchup">Catch up on missed topics</option></select></div><div class="form-group"><label>Course/Subjects</label><input type="text" name="subjects" placeholder="e.g. Mathematics, Physics, CSC 201" required></div><div class="form-group"><label>Available hours per day</label><select name="hours" required><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4+ hours</option></select></div><div class="form-group"><label>Brain/learning style</label><select name="style" required><option value="visual">Visual (diagrams, videos)</option><option value="auditory">Auditory (explain aloud)</option><option value="kinesthetic">Kinesthetic (practice/do)</option><option value="reading">Reading/Writing (notes)</option><option value="mixed">Mixed (all)</option></select></div><div class="form-group"><label>Intelligence/work capacity</label><select name="capacity" required><option value="low">Takes time to grasp (need more repetition)</option><option value="average">Average - steady pace</option><option value="high">Quick learner (can go faster)</option></select></div><div class="form-group"><label>Exam date (optional)</label><input type="date" name="examdate"></div><button class="button primary" type="submit">Generate Plan</button></form></section>`;
   }
   return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Your Study Plan</p><h1>${escapeHtml(plan.goalLabel)} Plan</h1><p>Based on ${escapeHtml(plan.style)} learning style, ${escapeHtml(plan.capacityLabel)} pace • ${plan.hours}h/day</p></div><section class="plan-active"><div class="plan-overview"><div><strong>Focus</strong><p>${escapeHtml(plan.subjects)}</p></div>${plan.examdate ? `<div><strong>Days to exam</strong><p>${plan.daysToExam} days</p></div>` : ''}<div><strong>Plan type</strong><p>${plan.tier}</p></div></div><h2>Weekly schedule</h2><div class="plan-weeks">${plan.weeks.map((week, i) => `<details class="plan-week" ${i === 0 ? 'open' : ''}><summary>Week ${i+1} - ${week.focus}</summary><div class="week-content">${week.days.map(day => `<div class="day-block"><strong>${day.day}</strong><ul>${day.tasks.map(task => `<li>${escapeHtml(task)}</li>`).join('')}</ul></div>`).join('')}</div></details>`).join('')}</div><div class="plan-actions"><button class="button" data-action="regenerate-plan">Regenerate with tweaks</button><button class="button primary" data-action="upgrade-plan">Upgrade plan</button><button class="button" data-action="clear-plan">Start fresh</button></div><p class="plan-note">Tip: Do practice questions daily. Use the AI Tutor for anything you don't understand - break it down until it clicks!</p></section>`;
+}
+function localDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+function currentStreak() {
+  const days = new Set(store.streak || []);
+  let streak = 0;
+  const cursor = new Date();
+  while (days.has(localDateKey(cursor))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+function longestStreak() {
+  const days = [...new Set(store.streak || [])].sort();
+  let best = 0, run = 0, previous = null;
+  for (const key of days) {
+    const date = new Date(`${key}T00:00:00`);
+    run = previous && Math.round((date - previous) / 86400000) === 1 ? run + 1 : 1;
+    best = Math.max(best, run);
+    previous = date;
+  }
+  return best;
+}
+function studiedToday() {
+  return (store.streak || []).includes(localDateKey());
+}
+function renderStreak() {
+  const days = new Set(store.streak || []);
+  const streak = currentStreak();
+  const best = longestStreak();
+  const last28 = Array.from({ length: 28 }, (_, index) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (27 - index));
+    const key = localDateKey(date);
+    return { key, active: days.has(key), label: date.toLocaleDateString('en-NG', { weekday: 'short', day: 'numeric', month: 'short' }) };
+  });
+  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Study streak</p><h1>Keep the chain alive</h1><p>Small daily sessions beat one long cram. Mark each day you study, then watch your streak grow.</p></div><section class="streak-section"><div class="streak-stats"><div><strong>${streak}</strong><span>current streak</span></div><div><strong>${best}</strong><span>best streak</span></div><div><strong>${(store.streak || []).length}</strong><span>total study days</span></div></div><div class="streak-action">${studiedToday() ? button('Undo today', 'undo-study') : button('Mark today as studied', 'mark-study', 'primary')}<span>${studiedToday() ? 'Logged for today. Come back tomorrow to extend your streak.' : 'One session today keeps your streak alive.'}</span></div><h2>Last 28 days</h2><div class="streak-grid" aria-label="Study attendance for the last 28 days">${last28.map(day => `<span class="streak-day ${day.active ? 'is-active' : ''}" title="${escapeHtml(day.label)}${day.active ? ' · studied' : ''}" aria-label="${escapeHtml(day.label)}${day.active ? ', studied' : ', no session'}">${day.active ? '✓' : ''}</span>`).join('')}</div><p class="streak-note">Your streak is saved on this device only. Aim for a 7-day streak first, then push to 30.</p></section>`;
+}
+const GRADE_POINTS = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };
+function renderCgpa() {
+  const courses = store.cgpaCourses || [];
+  const totalUnits = courses.reduce((sum, course) => sum + Number(course.units || 0), 0);
+  const totalPoints = courses.reduce((sum, course) => sum + Number(course.units || 0) * (GRADE_POINTS[course.grade] ?? 0), 0);
+  const gpa = totalUnits ? (totalPoints / totalUnits) : 0;
+  const classification = gpa >= 4.5 ? 'First Class' : gpa >= 3.5 ? 'Second Class Upper' : gpa >= 2.4 ? 'Second Class Lower' : gpa >= 1.5 ? 'Third Class' : gpa > 0 ? 'Pass' : '—';
+  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">CGPA calculator</p><h1>Estimate your GPA</h1><p>Add each course, its credit units, and your grade. This calculator uses the Nigerian 5-point scale.</p></div><section class="cgpa-section"><form id="cgpa-form" class="cgpa-form"><label><span>Course code</span><input name="code" placeholder="e.g. CSC 201" required></label><label><span>Units</span><input name="units" type="number" min="1" max="6" value="3" required></label><label><span>Grade</span><select name="grade" required><option>A (5)</option><option>B (4)</option><option>C (3)</option><option>D (2)</option><option>E (1)</option><option>F (0)</option></select></label><button class="button primary" type="submit">Add course</button></form><div class="cgpa-summary"><div><strong>${gpa.toFixed(2)}</strong><span>GPA</span></div><div><strong>${totalUnits}</strong><span>total units</span></div><div><strong>${classification}</strong><span>estimated class</span></div></div>${courses.length ? `<div class="cgpa-table">${courses.map(course => `<div class="cgpa-row"><span><b>${escapeHtml(course.code)}</b></span><span>${course.units} units</span><span class="grade-pill">${escapeHtml(course.grade)}</span><button class="button small" data-action="remove-course" data-id="${escapeHtml(course.id)}">Remove</button></div>`).join('')}</div><div class="cgpa-actions"><button class="button" data-action="reset-cgpa">Clear all courses</button></div>` : '<p class="empty-note">No courses added yet. Add your first course above.</p>'}<p class="streak-note">This is an estimate for planning. Always confirm your official CGPA with your department.</p></section>`;
 }
 function renderMissing(message) { return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="empty-note">${escapeHtml(message)}</p></div>`; }
 function renderQuiz() {
@@ -341,6 +394,30 @@ document.addEventListener('click', async event => {
   if (action === 'regenerate-plan') { store.studyPlan = null; safeWrite('naija-study-plan', null); render(); }
   if (action === 'clear-plan') { store.studyPlan = null; safeWrite('naija-study-plan', null); render(); }
   if (action === 'upgrade-plan') { if (store.studyPlan) { store.studyPlan.tier = store.studyPlan.tier === 'Free' ? 'Pro (more intensive)' : store.studyPlan.tier + '+'; store.studyPlan.weeks = upgradePlanWeeks(store.studyPlan); safeWrite('naija-study-plan', store.studyPlan); render(); } }
+  if (action === 'streak') setScreen('streak');
+  if (action === 'cgpa') setScreen('cgpa');
+  if (action === 'mark-study') {
+    const key = localDateKey();
+    store.streak = [...new Set([...(store.streak || []), key])].sort();
+    safeWrite('naija-streak', store.streak);
+    render();
+  }
+  if (action === 'undo-study') {
+    const key = localDateKey();
+    store.streak = (store.streak || []).filter(day => day !== key);
+    safeWrite('naija-streak', store.streak);
+    render();
+  }
+  if (action === 'remove-course') {
+    store.cgpaCourses = (store.cgpaCourses || []).filter(course => course.id !== control.dataset.id);
+    safeWrite('naija-cgpa-courses', store.cgpaCourses);
+    render();
+  }
+  if (action === 'reset-cgpa') {
+    store.cgpaCourses = [];
+    safeWrite('naija-cgpa-courses', store.cgpaCourses);
+    render();
+  }
 });
 function upgradePlanWeeks(plan) {
   return plan.weeks.map(week => ({
@@ -374,6 +451,7 @@ document.addEventListener('submit', event => {
     const question = input.value.trim();
     if (!question) return;
     const useAi = document.querySelector('#tutor-ai-toggle')?.checked;
+    store.aiEnabled = Boolean(useAi);
     store.chatHistory.push({ role: 'user', content: question });
     store.chatHistory.push({ role: 'assistant', content: 'Thinking... Breaking this down step by step for you.' });
     safeWrite('naija-chat-history', store.chatHistory);
@@ -431,6 +509,18 @@ document.addEventListener('submit', event => {
     const weeks = generateStudyPlan({ goal, subjects, hours, style, capacity, daysToExam });
     store.studyPlan = { goal, goalLabel: goalLabels[goal], subjects, hours, style, capacity, capacityLabel: capacityLabels[capacity], examdate, daysToExam, tier: 'Free', weeks, created: new Date().toISOString() };
     safeWrite('naija-study-plan', store.studyPlan);
+    render();
+    return;
+  }
+  if (event.target.id === 'cgpa-form') {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const code = String(data.get('code') || '').trim();
+    const units = Math.min(6, Math.max(1, Number(data.get('units') || 3)));
+    const grade = String(data.get('grade') || 'A').charAt(0).toUpperCase();
+    if (!code || !(grade in GRADE_POINTS)) return;
+    store.cgpaCourses = [...(store.cgpaCourses || []), { id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, code, units, grade }];
+    safeWrite('naija-cgpa-courses', store.cgpaCourses);
     render();
     return;
   }

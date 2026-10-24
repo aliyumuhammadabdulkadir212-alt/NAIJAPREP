@@ -9,7 +9,11 @@ Students can face barriers such as the cost or availability of study materials, 
 ## What it includes
 
 - A starting choice for JAMB candidates and university students.
-- A searchable study library of 22 learning links, official portals, scholarships, and study resources in the same app.
+- A searchable study library of 32 learning links, official portals, scholarships, and study resources. It includes web development, database, networking, and computer-science material collected while building the app.
+- An **AI Tutor** chatbot that breaks any course question into simple steps using Gemma 3 through a local Ollama install, with a structured offline guide when AI is unavailable.
+- A **Smart Study Plan** generator that asks for your goal, subjects, daily hours, learning style, pace, and exam date, then builds a week-by-week plan you can upgrade as you improve.
+- A **Study Streak** tracker with a 28-day attendance grid, current streak, and best streak saved on your device.
+- A **CGPA calculator** using the Nigerian 5-point scale, with course units, grades, and an estimated degree class.
 - 15 JAMB subjects, syllabus topics, topic-tagged original practice questions, and explanations.
 - Subject and topic practice, plus a timed CBT-style mock with English and three selected subjects.
 - University faculty and course browsing, levels 100–500 (and 600 for Medicine), course-unit search, and General Studies units.
@@ -54,7 +58,7 @@ Missing question files are handled as an empty bank and shown as “No questions
 
 ## Optional local AI
 
-Install [Ollama](https://ollama.com), start a local Gemma model (for example, `ollama run gemma3`), then enable **Explain with local AI** after answering a question. The browser sends the question and its explanation to `http://localhost:11434/api/generate`. This is optional; browser CORS or local service settings may prevent the request, in which case the app shows a clear unavailable message. No question data is sent to a hosted AI service.
+Install [Ollama](https://ollama.com), pull Gemma 3 with `ollama pull gemma3`, then start it with `ollama run gemma3`. The app uses the `gemma3` model in two places: the **AI Tutor** chat and **Explain with local AI** after a practice question. The browser sends the question to `http://localhost:11434/api/generate`. This is optional; browser CORS or local service settings may prevent the request, in which case the app shows a clear unavailable message or a structured offline explanation. No question data is sent to a hosted AI service.
 
 ## Contribute
 
