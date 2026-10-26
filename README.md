@@ -44,9 +44,9 @@ To use the local copy on another device:
 
 1. Connect the device to the same Wi-Fi as the computer.
 2. Run `serve.cmd` and open the **Other devices** link shown in the terminal.
-3. If Windows Firewall blocks the connection, allow PowerShell on private networks with `.\serve.ps1 -OpenFirewall` (this asks for administrator permission), or use the live link instead.
+3. If Windows Firewall blocks the connection, allow TCP port 8000 on all networks with `.\serve.ps1 -OpenFirewall` (this asks for administrator permission), or use the live link instead.
 
-Some Windows networks are marked **Public**; Windows blocks inbound PowerShell connections on Public networks. The live link avoids that restriction and is the most reliable option for phones and tablets.
+Some Wi-Fi networks isolate devices from each other. If the local link does not load on another device, run the firewall helper above or use the live link, which works everywhere.
 
 Any other static server also works, for example:
 

@@ -246,11 +246,11 @@ try {
 
 if ($OpenFirewall) {
   $ruleName = "Naija Scholar local preview ($Port)"
-  $command = "netsh advfirewall firewall add rule name=`"$ruleName`" dir=in action=allow protocol=TCP localport=$Port profile=private"
+  $command = "netsh advfirewall firewall add rule name=`"$ruleName`" dir=in action=allow protocol=TCP localport=$Port profile=any"
   try {
     $process = Start-Process powershell -Verb RunAs -ArgumentList @('-NoProfile', '-Command', $command) -Wait -PassThru
     if ($process.ExitCode -eq 0) {
-      Write-Host "Windows Firewall now allows this port on private networks." -ForegroundColor Green
+      Write-Host "Windows Firewall now allows TCP port $Port on all networks." -ForegroundColor Green
     } else {
       Write-Host "The firewall rule was not added (exit code $($process.ExitCode))." -ForegroundColor Yellow
     }
@@ -272,9 +272,9 @@ if ($lanAddresses.Count -eq 0) {
 }
 Write-Host ""
 Write-Host "On a phone, tablet, or another computer, open an 'Other devices' link while connected to the same Wi-Fi."
-Write-Host "If a device cannot connect, allow PowerShell on private networks:"
+Write-Host "If a device cannot connect, allow TCP port $Port on all networks:"
 Write-Host ("  .\serve.ps1 -Port {0} -OpenFirewall" -f $Port)
-Write-Host "If this Wi-Fi is marked Public, Windows may block inbound connections; the GitHub Pages link is the reliable option."
+Write-Host "Some Wi-Fi networks isolate devices from each other; the GitHub Pages link works everywhere."
 Write-Host "Press Ctrl+C to stop."
 Write-Host ""
 
