@@ -2,6 +2,8 @@
 
 An open-source, phone-friendly study platform for JAMB candidates and university students across Nigeria, first built for learners in Gombe State. It is a single-page static website built with HTML, CSS, vanilla JavaScript, and JSON. There is no backend, account, or paid service.
 
+**Live app:** [https://aliyumuhammadabdulkadir212-alt.github.io/NAIJAPREP/](https://aliyumuhammadabdulkadir212-alt.github.io/NAIJAPREP/)
+
 ## Why this app
 
 Students can face barriers such as the cost or availability of study materials, limited access to CBT practice, gaps in foundational topics, and difficulty finding relevant course resources. These challenges differ from student to student; this app offers a free place to practise, review explanations, and identify topics to revisit. It does not claim to explain every student's JAMB result or guarantee an exam outcome.
@@ -32,12 +34,24 @@ On Windows, double-click `serve.cmd`, or run the PowerShell script directly:
 .\serve.ps1
 ```
 
-It opens `http://localhost:8000`. If that port is busy, use `.\serve.ps1 -Port 8080`.
+It opens `http://localhost:8000` on this computer and prints an **Other devices** link, such as `http://192.168.1.162:8000/`, for phones, tablets, and other computers on the same Wi-Fi. If that port is busy, use `.\serve.ps1 -Port 8080`.
+
+### Use on a phone or tablet
+
+The easiest option is the live app link at the top of this page. It uses HTTPS, so the service worker can cache the app for offline use and the browser can install it to the home screen.
+
+To use the local copy on another device:
+
+1. Connect the device to the same Wi-Fi as the computer.
+2. Run `serve.cmd` and open the **Other devices** link shown in the terminal.
+3. If Windows Firewall blocks the connection, allow PowerShell on private networks with `.\serve.ps1 -OpenFirewall` (this asks for administrator permission), or use the live link instead.
+
+Some Windows networks are marked **Public**; Windows blocks inbound PowerShell connections on Public networks. The live link avoids that restriction and is the most reliable option for phones and tablets.
 
 Any other static server also works, for example:
 
 ```sh
-python -m http.server 8000
+python3 -m http.server 8000
 # or
 npx serve .
 ```
