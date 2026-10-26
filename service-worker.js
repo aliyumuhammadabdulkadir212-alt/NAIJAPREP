@@ -1,4 +1,4 @@
-const CACHE_NAME = 'naija-scholar-v5';
+const CACHE_NAME = 'naija-scholar-v9';
 const APP_FILES = ['./', './index.html', './style.css', './app.js', './manifest.webmanifest', './data/jamb.json', './data/faculties.json', './data/units.json', './data/library.json',
   './data/jamb/english.json', './data/jamb/mathematics.json', './data/jamb/biology.json', './data/jamb/chemistry.json', './data/jamb/physics.json',
   './data/jamb/government.json', './data/jamb/economics.json', './data/jamb/literature-in-english.json', './data/jamb/crk.json', './data/jamb/irk.json',
@@ -12,6 +12,8 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin !== self.location.origin) return;
   event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
     if (response.ok && new URL(event.request.url).origin === self.location.origin) {
       const copy = response.clone();

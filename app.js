@@ -1,6 +1,6 @@
 /* Naija Scholar: small, data-driven static app. */
 const appRoot = document.querySelector('#app');
-const store = { screen: 'home', jamb: [], faculties: [], units: [], library: [], scores: [], theme: 'light', aiEnabled: false, tutorMessages: [], tutorLoading: false, tutorCourse: 'Auto-detect', streak: safeRead('naija-streak', []), cgpaCourses: safeRead('naija-cgpa-courses', []) };
+const store = { screen: 'home', jamb: [], faculties: [], units: [], library: [], scores: [], theme: 'light', streak: safeRead('naija-streak', []), cgpaCourses: safeRead('naija-cgpa-courses', []) };
 let session = null;
 let timerId = null;
 const dataCache = new Map();
@@ -44,10 +44,9 @@ function setScreen(name) {
 }
 function render() {
   document.documentElement.dataset.theme = store.theme;
-  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark" aria-hidden="true">🎓</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="tutor">AI tutor</button><button class="text-button" data-action="planner">Study plan</button><button class="text-button" data-action="library">Library</button><button class="text-button nav-secondary" data-action="streak">Streak</button><button class="text-button nav-secondary" data-action="cgpa">CGPA</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button></nav></header>`;
+  const header = `<header class="topbar"><a class="brand" href="#" data-action="home"><span class="brand-mark" aria-hidden="true">🎓</span><span>Naija <b>Scholar</b></span></a><nav aria-label="Main navigation"><button class="text-button" data-action="planner">Study plan</button><button class="text-button" data-action="library">Library</button><button class="text-button nav-secondary" data-action="streak">Streak</button><button class="text-button nav-secondary" data-action="cgpa">CGPA</button><button class="icon-button" aria-label="Toggle colour theme" title="Toggle theme" data-action="theme">${store.theme === 'dark' ? '☀' : '◐'}</button></nav></header>`;
   const pages = {
     home: renderHome,
-    tutor: renderTutor,
     planner: renderPlanner,
     streak: renderStreak,
     cgpa: renderCgpa,
@@ -70,57 +69,7 @@ function render() {
 function renderHome() {
   const saved = store.scores.length;
   const streak = currentStreak();
-  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Practice questions, an AI tutor that breaks problems down in under a minute, adaptive study plans, and tools that keep you consistent.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><h2 class="home-tools-title">Student tools</h2><div class="home-tools"><button class="tool-link" data-action="tutor"><span>01</span><strong>Ask the AI tutor</strong><small>Get a patient, step-by-step explanation</small><b>↗</b></button><button class="tool-link" data-action="planner"><span>02</span><strong>Build a study plan</strong><small>Set a pace that fits your time and confidence</small><b>↗</b></button><button class="tool-link" data-action="streak"><span>03</span><strong>${streak}-day study streak</strong><small>Mark today's session and keep the chain alive</small><b>↗</b></button><button class="tool-link" data-action="cgpa"><span>04</span><strong>CGPA calculator</strong><small>Estimate your GPA on the 5-point scale</small><b>↗</b></button><button class="tool-link" data-action="library"><span>05</span><strong>Study library</strong><small>Past questions, textbooks, courses, and developer docs</small><b>↗</b></button><button class="tool-link" data-action="contribute"><span>06</span><strong>Contribute</strong><small>Add original questions or improve the project</small><b>↗</b></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;
-}
-function tutorCourseOptions() {
-  const units = store.units.courses.flatMap(course => Object.values(course.levels || {}).flat()).map(unit => `${unit.code} · ${unit.title}`);
-  return ['Auto-detect', ...store.jamb.map(subject => subject.name), ...allCourses().map(course => course.name), ...units, ...(store.units.gst || []).map(unit => `${unit.code} · ${unit.title}`)].filter((course, index, options) => options.indexOf(course) === index);
-}
-function renderTutor() {
-  const options = tutorCourseOptions().map(course => `<option value="${escapeHtml(course)}" ${course === store.tutorCourse ? 'selected' : ''}>${escapeHtml(course)}</option>`).join('');
-  const messages = store.tutorMessages.map(message => `<article class="chat-message ${message.role === 'user' ? 'from-student' : 'from-tutor'}"><span>${message.role === 'user' ? 'You' : 'Naija Tutor'}</span><p>${escapeHtml(message.text)}</p></article>`).join('');
-  return `<div class="page-heading"><button class="back-link" data-action="home">← Home</button><p class="eyebrow">Patient, step-by-step help</p><h1>AI study tutor</h1><p>Ask about a concept, calculation, or question from any course. Choose a subject for more focused help.</p></div><section class="tutor-layout"><aside class="tutor-aside"><span class="local-badge">Local Gemma · private</span><h2>Understand it, not just copy it.</h2><p>The tutor explains in short steps, shows the working, and checks the answer. It does not guarantee exam results.</p><div class="tutor-suggestions"><strong>Try asking</strong><button data-action="tutor-suggestion" data-message="Explain this idea in simple steps and give me one easy example: ">Explain a hard idea</button><button data-action="tutor-suggestion" data-message="Check my working, show me where I went wrong, and solve it step by step: ">Check my answer</button><button data-action="tutor-suggestion" data-message="Teach me how to solve this type of problem, then give me a similar practice question: ">Practise a method</button></div><p class="privacy-note">Your chat is sent only to Ollama running on this device. No hosted AI service is used.</p></aside><section class="chat-panel" aria-label="Tutor conversation"><div id="tutor-thread" class="chat-thread" aria-live="polite">${messages || '<div class="chat-empty"><span>✳</span><h2>What are you working on?</h2><p>Share the exact question or topic, and include what you have tried so far.</p></div>'}${store.tutorLoading ? '<article class="chat-message from-tutor"><span>Naija Tutor</span><p class="typing-state">Working through the steps…</p></article>' : ''}</div><form id="tutor-form" class="tutor-form"><label for="tutor-course">Course or subject</label><select id="tutor-course">${options}</select><label for="tutor-prompt">Your question</label><textarea id="tutor-prompt" maxlength="2000" rows="3" placeholder="Paste a question or describe what is confusing…" required ${store.tutorLoading ? 'disabled' : ''}></textarea><div class="tutor-form-footer"><span>Up to 2,000 characters · local AI can take a few seconds</span><button class="button primary" type="submit" ${store.tutorLoading ? 'disabled' : ''}>${store.tutorLoading ? 'Thinking…' : 'Explain this'}</button></div><p class="tutor-error" role="status">${store.tutorError ? escapeHtml(store.tutorError) : ''}</p></form></section></section>`;
-}
-function addTutorPrompt(prompt) {
-  const input = document.querySelector('#tutor-prompt');
-  if (!input) return;
-  input.value = prompt;
-  input.focus();
-}
-async function sendTutorMessage(event) {
-  event.preventDefault();
-  if (store.tutorLoading) return;
-  const prompt = document.querySelector('#tutor-prompt')?.value.trim();
-  if (!prompt) return;
-  store.tutorCourse = document.querySelector('#tutor-course')?.value || 'Auto-detect';
-  store.tutorMessages.push({ role: 'user', text: prompt });
-  store.tutorMessages = store.tutorMessages.slice(-12);
-  store.tutorLoading = true;
-  store.tutorError = '';
-  render();
-  const thread = document.querySelector('#tutor-thread');
-  if (thread) thread.scrollTop = thread.scrollHeight;
-  const courseContext = store.tutorCourse === 'Auto-detect' ? 'Infer the subject from the question. If you cannot tell, ask one brief clarifying question.' : `The student selected ${store.tutorCourse}.`;
-  const systemPrompt = `You are Naija Scholar, a patient tutor for Nigerian secondary and university students. ${courseContext} Explain the core idea in plain language, then show numbered steps and the working for calculations. Check the final answer and point out a common mistake when useful. Keep the first reply concise enough to read in under a minute; offer more detail rather than overwhelming the student. If the problem is ambiguous, ask one focused clarifying question. Never invent facts, citations, or official exam questions, and never promise a score.`;
-  try {
-    const response = await fetch('http://localhost:11434/api/chat', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'gemma3', stream: false, messages: [{ role: 'system', content: systemPrompt }, ...store.tutorMessages.map(message => ({ role: message.role === 'user' ? 'user' : 'assistant', content: message.text }))], options: { temperature: 0.2, num_predict: 600 } }),
-      signal: AbortSignal.timeout(60000)
-    });
-    if (!response.ok) throw new Error('Ollama returned an unavailable response.');
-    const result = await response.json();
-    const answer = result.message?.content || result.response;
-    if (!answer) throw new Error('The local model returned an empty reply.');
-    store.tutorMessages.push({ role: 'assistant', text: answer });
-  } catch {
-    store.tutorMessages.push({ role: 'assistant', text: 'I could not reach Gemma on this device. Start Ollama with `ollama run gemma3`, then allow this site in Ollama with `OLLAMA_ORIGINS` and try again. Your question has not been sent to a hosted AI.' });
-  } finally {
-    store.tutorLoading = false;
-    render();
-    const updatedThread = document.querySelector('#tutor-thread');
-    if (updatedThread) updatedThread.scrollTop = updatedThread.scrollHeight;
-  }
+  return `<section class="welcome"><p class="eyebrow">Learn. Pass. Succeed.</p><h1>Naija Scholar<br><em>Free exam prep for Nigerians.</em></h1><p class="lede">Practice questions, adaptive study plans, and tools that keep you consistent.</p><h2>Who are you?</h2><div class="role-grid"><button class="role-card jamb-card" data-action="jamb"><span class="role-number">01 / JAMB</span><strong>JAMB candidate</strong><span>Preparing for UTME, or just getting started.</span><span class="arrow">Explore practice <b>↗</b></span></button><button class="role-card uni-card" data-action="university"><span class="role-number">02 / UNIVERSITY</span><strong>University student</strong><span>Find your course units and practise by level.</span><span class="arrow">Browse courses <b>↗</b></span></button></div><h2 class="home-tools-title">Student tools</h2><div class="home-tools"><button class="tool-link" data-action="planner"><span>01</span><strong>Build a study plan</strong><small>Set a pace that fits your time and confidence</small><b>↗</b></button><button class="tool-link" data-action="streak"><span>02</span><strong>${streak}-day study streak</strong><small>Mark today's session and keep the chain alive</small><b>↗</b></button><button class="tool-link" data-action="cgpa"><span>03</span><strong>CGPA calculator</strong><small>Estimate your GPA on the 5-point scale</small><b>↗</b></button><button class="tool-link" data-action="library"><span>04</span><strong>Study library</strong><small>Past questions, textbooks, courses, and developer docs</small><b>↗</b></button><button class="tool-link" data-action="contribute"><span>05</span><strong>Contribute</strong><small>Add original questions or improve the project</small><b>↗</b></button></div><div class="home-foot"><span>15 JAMB subjects</span><span>Works offline after first load</span><span>${saved} saved practice ${saved === 1 ? 'result' : 'results'}</span></div></section>`;
 }
 function dateInputValue(daysFromNow = 14) {
   const date = new Date();
@@ -361,12 +310,9 @@ function renderQuiz() {
   if (session.kind === 'mock') return renderMockQuestion();
   const item = session.questions[session.index];
   if (!item) return renderResult();
-  const feedback = session.answered ? `<section class="answer-feedback ${session.lastCorrect ? 'is-correct' : 'is-wrong'}"><strong>${session.lastCorrect ? 'Correct' : 'Review this answer'}</strong><p><b>Answer: ${escapeHtml(item.options[item.answer])}</b></p><p>${escapeHtml(item.explanation)}</p>${aiButton(item)}<button class="button primary" data-action="next-question">${session.index + 1 === session.questions.length ? 'View results' : 'Next question'}</button></section>` : '';
+  const feedback = session.answered ? `<section class="answer-feedback ${session.lastCorrect ? 'is-correct' : 'is-wrong'}"><strong>${session.lastCorrect ? 'Correct' : 'Review this answer'}</strong><p><b>Answer: ${escapeHtml(item.options[item.answer])}</b></p><p>${escapeHtml(item.explanation)}</p><button class="button primary" data-action="next-question">${session.index + 1 === session.questions.length ? 'View results' : 'Next question'}</button></section>` : '';
   const options = item.options.map((option, index) => `<button class="answer-option ${session.answered && index === item.answer ? 'answer-correct' : ''} ${session.answered && index === session.selected && !session.lastCorrect ? 'answer-wrong' : ''}" data-action="answer" data-index="${index}" ${session.answered ? 'disabled' : ''}><span>${String.fromCharCode(65 + index)}</span>${escapeHtml(option)}</button>`).join('');
   return `<div class="quiz-top"><button class="back-link" data-action="end-practice">← End practice</button><span>${session.index + 1} / ${session.questions.length}</span></div><div class="progress-track"><span style="width:${((session.index + 1) / session.questions.length) * 100}%"></span></div><article class="question-panel"><p class="eyebrow">Practice question · ${escapeHtml(item.subject || session.subject)} · ${escapeHtml(item.topic)}</p>${item.year || item.source ? `<p class="source-tag">${item.year ? `Year ${escapeHtml(item.year)}` : ''}${item.source ? ` · ${escapeHtml(item.source)}` : ''}</p>` : ''}<h1>${escapeHtml(item.q)}</h1><div class="answer-list">${options}</div>${feedback}</article>`;
-}
-function aiButton(item) {
-  return `<div class="ai-tools"><label><input type="checkbox" data-action="ai-toggle" ${store.aiEnabled ? 'checked' : ''}> Explain with local AI</label>${store.aiEnabled ? `<button class="button small" data-action="explain-ai" data-question="${escapeHtml(item.q)}" data-explanation="${escapeHtml(item.explanation)}">Ask Gemma</button><p class="ai-answer" aria-live="polite"></p>` : '<span>Off by default · Gemma via Ollama</span>'}</div>`;
 }
 function renderMockQuestion() {
   const item = session.questions[session.index];
@@ -484,33 +430,14 @@ function updateSearch(query) {
   const unitMatches = [...(store.units.gst || []), ...store.units.courses.flatMap(course => Object.values(course.levels || {}).flat())].filter(unit => `${unit.code} ${unit.title}`.toLowerCase().includes(normalized)).map(unit => `<button class="search-result" data-action="practice-unit" data-code="${escapeHtml(unit.code)}"><strong>${escapeHtml(unit.code)} · ${escapeHtml(unit.title)}</strong><span>Course unit</span></button>`);
   area.innerHTML = courseMatches.concat(unitMatches).slice(0, 12).join('') || `<p class="empty-note">No matching course or unit.</p>`;
 }
-async function explainWithAi(buttonElement) {
-  const output = document.querySelector('.ai-answer');
-  if (!output) return;
-  output.textContent = 'Connecting to Ollama…';
-  try {
-    const response = await fetch('http://localhost:11434/api/generate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'gemma3', stream: false, prompt: `You are Naija Scholar's patient Gemma 3 tutor. Explain this practice question to a Nigerian student in simple terms, showing the key idea, numbered steps, the correct answer, and one quick way to check it. Keep the response concise. Question: ${buttonElement.dataset.question}\nCorrect explanation: ${buttonElement.dataset.explanation}` }),
-      signal: AbortSignal.timeout(60000)
-    });
-    if (!response.ok) throw new Error('Ollama unavailable');
-    const result = await response.json();
-    output.textContent = result.response || 'The local model returned no explanation.';
-  } catch {
-    output.textContent = 'Local AI is unavailable. Install Ollama, run `ollama pull gemma3` and `ollama run gemma3`, allow this site in `OLLAMA_ORIGINS`, and try again.';
-  }
-}
 document.addEventListener('click', async event => {
   const control = event.target.closest('[data-action]');
   if (!control) return;
   const action = control.dataset.action;
   if (action === 'theme') { store.theme = store.theme === 'dark' ? 'light' : 'dark'; safeWrite('gombe-theme', store.theme); render(); }
   if (action === 'home') setScreen('home');
-  if (action === 'tutor') setScreen('tutor');
   if (action === 'planner') setScreen('planner');
   if (action === 'upgrade-plan') upgradeStudyPlan();
-  if (action === 'tutor-suggestion') addTutorPrompt(control.dataset.message || '');
   if (action === 'streak') setScreen('streak');
   if (action === 'cgpa') setScreen('cgpa');
   if (action === 'mark-study') {
@@ -556,14 +483,12 @@ document.addEventListener('click', async event => {
   if (action === 'previous-question') { session.index = Math.max(0, session.index - 1); render(); }
   if (action === 'next-mock') { session.index = Math.min(session.questions.length - 1, session.index + 1); render(); }
   if (action === 'submit-mock') finishPractice();
-  if (action === 'explain-ai') explainWithAi(control);
 });
 document.addEventListener('input', event => {
   if (event.target.id === 'course-search') updateSearch(event.target.value);
   if (event.target.id === 'library-search') updateLibraryResults();
 });
 document.addEventListener('change', event => {
-  if (event.target.dataset.action === 'ai-toggle') { store.aiEnabled = event.target.checked; render(); }
   if (event.target.id === 'library-type') updateLibraryResults();
   if (['plan-track', 'plan-course', 'plan-level'].includes(event.target.id)) refreshPlanFields();
   if (event.target.dataset.action === 'plan-check' && store.plan) {
@@ -576,7 +501,6 @@ document.addEventListener('change', event => {
   }
 });
 document.addEventListener('submit', event => {
-  if (event.target.id === 'tutor-form') { sendTutorMessage(event); return; }
   if (event.target.id === 'plan-form') { saveStudyPlan(event); return; }
   if (event.target.id === 'cgpa-form') {
     event.preventDefault();
@@ -603,13 +527,20 @@ async function initialise() {
   store.scores = safeRead('gombe-practice-scores', []);
   store.plan = safeRead('naija-study-plan', null);
   const [jamb, faculties, units, library] = await Promise.all([readJson('data/jamb.json'), readJson('data/faculties.json'), readJson('data/units.json'), readJson('data/library.json')]);
+  if ([jamb, faculties, units, library].some(data => data === null)) {
+    console.error('Naija Scholar could not load its required data files.');
+    appRoot.innerHTML = '<main><section class="empty-note" role="alert"><h1>Naija Scholar could not load</h1><p>Check your connection and make sure you opened the app from a web server, then try again.</p><a href="./">Reload the app</a></section></main>';
+    return;
+  }
   store.jamb = jamb?.subjects || [];
   store.faculties = faculties?.faculties || [];
   store.units = units || { courses: [], gst: [] };
   store.library = Array.isArray(library) ? library : [];
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+    navigator.serviceWorker.register('./service-worker.js').catch(error => {
+      console.error('Naija Scholar could not enable offline support:', error);
+    });
   }
 }
 initialise();

@@ -10,7 +10,6 @@ Students can face barriers such as the cost or availability of study materials, 
 
 - A starting choice for JAMB candidates and university students.
 - A searchable study library of 32 learning links, official portals, scholarships, and study resources. It now includes web development, database, networking, and computer-science material collected from the local SIWES manuals.
-- A course-aware AI tutor that breaks problems into concise, numbered steps and adapts to a selected subject or degree course.
 - A student-controlled study planner using target date, weekly availability, preferred study style, and self-rated confidence to schedule review blocks.
 - Steady, Focused, and Intensive paces; the student can upgrade or change pace while keeping their daily time limit.
 - A study streak tracker with a 28-day attendance grid, current streak, and best streak saved on the device.
@@ -20,16 +19,27 @@ Students can face barriers such as the cost or availability of study materials, 
 - University faculty and course browsing, levels 100–500 (and 600 for Medicine), course-unit search, and General Studies units.
 - Score summaries by subject and topic, weak-topic suggestions, and locally saved progress.
 - Light and dark themes, responsive layouts, and a service worker that caches the app and its question data for offline use after the first visit.
-- Optional local Gemma tutoring and answer explanations through Ollama. Chat is sent to the student's own device, not a hosted AI service.
 
 All included questions are original practice questions, not real JAMB or university examination papers. The project is not affiliated with JAMB or any university. A year/source label appears only for question data that includes those fields.
 
 ## Run locally
 
-The Fetch API and service workers require an HTTP origin. From the project directory, run any static server, for example:
+The app is a static site with no backend, build step, or AI service. The Fetch API and service workers need an HTTP origin, so serve the folder with any static server.
+
+On Windows, double-click `serve.cmd`, or run the PowerShell script directly:
+
+```powershell
+.\serve.ps1
+```
+
+It opens `http://localhost:8000`. If that port is busy, use `.\serve.ps1 -Port 8080`.
+
+Any other static server also works, for example:
 
 ```sh
 python -m http.server 8000
+# or
+npx serve .
 ```
 
 Then visit `http://localhost:8000`. You can also use the Live Server extension in VS Code. Opening `index.html` directly with `file://` will not load the JSON data.
@@ -57,11 +67,9 @@ data/
 
 Missing question files are handled as an empty bank and shown as “No questions yet, contribute on GitHub.” Content is kept out of the application code.
 
-## AI tutor and study plans
+## Study plans
 
-The tutor uses [Ollama](https://ollama.com) and Gemma 3 on the student's device. Install Ollama, download Gemma with `ollama pull gemma3`, and start its local service. The browser calls `http://localhost:11434/api/chat` only when the student submits a question. Because the app is hosted on GitHub Pages, allow its origin in Ollama's `OLLAMA_ORIGINS` setting (for example, `https://aliyumuhammadabdulkadir212-alt.github.io`) and allow your local development origin when testing. If Ollama, the model, or browser access is unavailable, the tutor explains how to reconnect and does not send the question to a hosted service. Response speed depends on the student's device and model; the app does not promise a one-minute answer or a particular exam score.
-
-Study plans are generated in the browser from the student's own course choices, target date, available study time, preferred study method, and confidence ratings. Confidence is a self-assessment, not an IQ or intelligence test. Study preferences and completed sessions are saved in local storage on that device and can be edited or cleared from the browser. The planner does not send profile data to Ollama.
+Study plans are generated in the browser from the student's own course choices, target date, available study time, preferred study method, and confidence ratings. Confidence is a self-assessment, not an IQ or intelligence test. Study preferences and completed sessions are saved in local storage on that device and can be edited or cleared from the browser. The planner runs entirely in the browser and sends no profile data anywhere.
 
 ## Contribute
 

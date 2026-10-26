@@ -4,7 +4,7 @@
   "description": "Free original study practice for JAMB candidates and university students in Nigeria.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f4ee",
-  "theme_color": "#1f6947",
+  "background_color": "#e9e5f9",
+  "theme_color": "#6d5dfc",
   "icons": []
 }
